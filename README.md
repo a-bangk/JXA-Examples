@@ -16,5 +16,5 @@ You can drop the files onto the included Applications "Rename js to scpt" and "R
 * [JXA tutorial from WWDC](https://github.com/josh-/automating-macOS-with-JXA-presentation)
 * [JXA Resources](https://apple-dev.groups.io/g/jxa/wiki/JXA-Resources)
 * [Apple Docs](https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html#//apple_ref/doc/uid/TP40016239-CH69-SW1)
-* [Apple Script Language Guide
+* [AppleScript Language Guide
 ](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983)
