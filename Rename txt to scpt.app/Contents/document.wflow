@@ -68,7 +68,7 @@
 					<dict>
 						<key>tokenizedValue</key>
 						<array>
-							<string>txt</string>
+							<string>scpt</string>
 						</array>
 					</dict>
 					<key>singleItemOption</key>
@@ -81,7 +81,7 @@
 					<dict>
 						<key>tokenizedValue</key>
 						<array>
-							<string>scpt</string>
+							<string>txt</string>
 						</array>
 					</dict>
 					<key>useLeadingZeros</key>
@@ -135,7 +135,7 @@
 					<key>renameType</key>
 					<integer>4</integer>
 					<key>replaceWithText</key>
-					<string>txt</string>
+					<string>scpt</string>
 					<key>singleItemOption</key>
 					<integer>0</integer>
 					<key>startingNumber</key>
@@ -143,7 +143,7 @@
 					<key>textInput</key>
 					<string></string>
 					<key>textToFind</key>
-					<string>scpt</string>
+					<string>txt</string>
 					<key>useLeadingZeros</key>
 					<false/>
 				</dict>
