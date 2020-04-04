@@ -8,6 +8,13 @@ JXA is the Javascript implementation of AppleScript.
 
 You can drop the files onto the included Applications "Rename js to scpt" and "Rename scpt to js" per your preference. Script Editor can open both file types. 
 
+## Naming
+
+* Investigate - scripts and features that do not work as expected 
+* Finder - Scripts primarily demonstrating a Finder features
+* Reminders - Scripts primarily demonstrating a Reminder feature. 
+* SA - Scripts demonstrating feature form the Standard Additions library
+* JS - Scripts using only standard JS. 
 
 
 ## Useful Places Online
