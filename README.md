@@ -10,11 +10,11 @@ You can drop the files onto the included Applications "Rename js to scpt" and "R
 
 ## Naming
 
+File names start with the App or library they are demonstrating. The exceptions are:  
+
 * Investigate - scripts and features that do not work as expected 
-* Finder - Scripts primarily demonstrating a Finder features
-* Reminders - Scripts primarily demonstrating a Reminder feature. 
-* SA - Scripts demonstrating feature form the Standard Additions library
-* JS - Scripts using only standard JS. 
+* SA - Scripts demonstrating feature form the Standard Additions library 
+* Apple ref - copied from [Apple's own guides](https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/index.html#//apple_ref/doc/uid/TP40016239-CH56-SW1). 
 
 
 ## Useful Places Online
@@ -25,3 +25,4 @@ You can drop the files onto the included Applications "Rename js to scpt" and "R
 * [Apple Docs](https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html#//apple_ref/doc/uid/TP40016239-CH69-SW1)
 * [AppleScript Language Guide
 ](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983)
+* [Hack Mag JXA intro](https://hackmag.com/coding/getting-to-grips-with-javascript-automation-for-os-x/)
