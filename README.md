@@ -13,7 +13,7 @@ You can drop the files onto the included Applications "Rename js to scpt" and "R
 File names start with the App or library they are demonstrating. The exceptions are:  
 
 * Investigate - scripts and features that do not work as expected 
-* SA - Scripts demonstrating feature form the Standard Additions library 
+* SA - Scripts demonstrating feature from Standard Additions library 
 * Apple ref - copied from [Apple's own guides](https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/index.html#//apple_ref/doc/uid/TP40016239-CH56-SW1). 
 
 
