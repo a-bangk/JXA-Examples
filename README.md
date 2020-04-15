@@ -20,9 +20,11 @@ File names start with the App or library they are demonstrating. The exceptions 
 ## Useful Places Online
 
 * [JXA Cookbook](https://github.com/JXA-Cookbook/JXA-Cookbook)
+* [JXA Release Notes](https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/Articles/Introduction.html#//apple_ref/doc/uid/TP40014508-CH111-SW1)
 * [JXA tutorial from WWDC](https://github.com/josh-/automating-macOS-with-JXA-presentation)
 * [JXA Resources](https://apple-dev.groups.io/g/jxa/wiki/JXA-Resources)
 * [Apple Docs](https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html#//apple_ref/doc/uid/TP40016239-CH69-SW1)
 * [AppleScript Language Guide
 ](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983)
 * [Hack Mag JXA intro](https://hackmag.com/coding/getting-to-grips-with-javascript-automation-for-os-x/)
+* [JXA explained](https://www.macstories.net/tutorials/getting-started-with-javascript-for-automation-on-yosemite/)
