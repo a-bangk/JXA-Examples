@@ -4,7 +4,9 @@ A collection of Javascript for Automation (JXA) Snippets for reference and learn
 
 ## About 
 
-JXA is the Javascript implementation of AppleScript. 
+Code can be seen in browser on the [Wiki](https://github.com/SeamlessIO/JXA-Snippets/wiki/JXA-Snippets-in-Wiki-Book,-draft-edit).
+
+JXA is the Javascript implementation of AppleScript.
 
 You can drop the files onto the included Applications "Rename js to scpt" and "Rename scpt to js" per your preference. Script Editor can open both file types. 
 
