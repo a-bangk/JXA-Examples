@@ -29,3 +29,4 @@ File names start with the App or library they are demonstrating. The exceptions 
 * [Hack Mag JXA intro](https://hackmag.com/coding/getting-to-grips-with-javascript-automation-for-os-x/)
 * [Mac Stories: Getting Started with JXA](https://www.macstories.net/tutorials/getting-started-with-javascript-for-automation-on-yosemite/)
 * [Automating Chrome](https://medium.com/@SteveBarbera/automating-chrome-with-jxa-javascript-application-scripting-6f9bc433216a)
+* [Japanese JXA Exampels](http://www.openspc2.org/reibun/JXA/Yosemite/)
