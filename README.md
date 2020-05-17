@@ -4,7 +4,7 @@ A collection of Javascript for Automation (JXA) Snippets for reference and learn
 
 ## About 
 
-Code can be seen in browser on the [Wiki](https://github.com/SeamlessIO/JXA-Snippets/wiki/JXA-Snippets-in-Wiki-Book,-draft-edit).
+Code can be seen in and launched from the browser on the [blog](https://www.seamlessio.com/articles/jxa-snippets-collection).
 
 JXA is the Javascript implementation of AppleScript.
 
