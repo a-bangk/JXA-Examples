@@ -3,7 +3,7 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Adam Kjems -- Creator -- 7ragonfly
 
 # THANKS
 
