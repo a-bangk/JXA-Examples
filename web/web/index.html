@@ -1,0 +1,1330 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+<h1>JXA Snippets </h1>
+  <a name="top"></a>
+  A collection of Javascript for Automation (JXA) Snippets for reference and learning. All the code in this repository was run and tested on macOS 10.15.4 Catalina.
+  JXA is the Javascript implementation of AppleScript and it allows to script Apple's standard applications, such as Calendar, Reminders, and Music. It can also be used to control the UI. There aren't any recent books or tutorials on JXA so I hope this collection will make your learning a little easier. [Other resources](#links) are linked at the bottom of the page.
+
+  <h3>Page Strucuture</h3>
+  Script names start with the App or the library name they are demonstrating. The exceptions are:
+  <ul>
+  <li> Investigate - scripts and features that do not work as expected
+  <li> SA - Scripts demonstrating feature from Standard Additions library
+  <li> Apple ref - copied from [Apple's own guides](https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/index.html#//apple_ref/doc/uid/TP40016239-CH56-SW1).
+  </ul>
+
+  <p>  Jump to <a href="#index">Index</a>.</p>
+  <hr>
+  <p>  <a name="apple-ref-add-attendee-to-event"></a>
+    <h4> Apple Ref Add Attendee to Event </h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Dvar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0D%0Dvar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22Project%20Calendar%22%7D%29%0Dvar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%20%0Dvar%20events%20%3D%20projectCalendar.events.whose%28%7Bsummary%3A%20%22Important%20Meeting%21%22%7D%29%0Dvar%20event%20%3D%20events%5B0%5D%0D%0Dvar%20attendee%20%3D%20Calendar.Attendee%28%7Bemail%3A%20%22example%40apple.com%22%7D%29%0Devent.attendees.push%28attendee%29%0D%0DCalendar.reloadCalendars%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+
+  <span class="cs">  <span class="hljs-keyword">var</span> app = Application.currentApplication()
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">"Calendar"</span>)
+
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({name: <span class="hljs-string">"Project Calendar"</span>})
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">var</span> events = projectCalendar.events.whose({summary: <span class="hljs-string">"Important Meeting!"</span>})
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">event</span> = events[<span class="hljs-number">0</span>]
+
+    <span class="hljs-keyword">var</span> attendee = Calendar.Attendee({email: <span class="hljs-string">"example@apple.com"</span>})
+    <span class="hljs-keyword">event</span>.attendees.push(attendee)
+
+    Calendar.reloadCalendars();</span>
+  </code></pre>
+  <hr>
+  <p>  <a name="apple-ref-mail"></a>
+    <h4> Apple Ref Mail</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0AMail%20%3D%20Application%28%27Mail%27%29%0A%0AMail.name%28%29%0A%0AMail.name%0A%0AMail.outgoingMessages%5B0%5D%0A%0A//Mail.accounts%5B0%5D.mailboxes%5B8%5D.messages%5B0%5D%28%29%0A//Mail.accounts%5B0%5D.mailboxes%5B8%5D%28%29%0A%0AMail.activate%28%29%20//bring%20Mail%20to%20foreground%0AMail.accounts%5B%27iCloud%27%5D.checkForNewMail%28%29%0A%0A//%20show%20latest%20message%20in%20inbox%0Avar%20latestMsg%20%3D%20Mail.inbox.messages%5B0%5D%0AMail.open%28latestMsg%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    Mail = Application('Mail')
+
+    Mail.name()
+
+    Mail.name
+
+    Mail.outgoingMessages[0]
+
+    //Mail.accounts[<span class="hljs-string">0</span>].mailboxes[<span class="hljs-string">8</span>].messages[<span class="hljs-string">0</span>](<span class="hljs-link"></span>)
+    //Mail.accounts[<span class="hljs-string">0</span>].mailboxes[<span class="hljs-string">8</span>](<span class="hljs-link"></span>)
+
+    Mail.activate() //bring Mail to foreground
+    Mail.accounts['iCloud'].checkForNewMail()
+
+    // show latest message in inbox
+    var latestMsg = Mail.inbox.messages[0]
+    Mail.open(latestMsg);
+  </code></pre>
+  <hr>
+  <p>  <a name="apple-ref-new-keynote"></a>
+    <h4> Apple Ref New Keynote</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Example%20Code%20on%20WWDC%20talk%0A%0AKeynote%20%3D%20Application%28%22Keynote%22%29%20%0A%0AKeynote.activate%28%29%20//foreground%0A%0A//document%20class%2C%20make%20it%20a%20method%2C%20and%20add%20make%20verb%20at%20the%20end.%20%0A//newDoc%20%3D%20Keynote.Document%28%29.make%28%29%0A%0A//can%20create%20with%20properties%20set%20as%20record%0Adoc%20%3D%20Keynote.Document%28%7B%0A%09documentTheme%3AKeynote.themes%5B%22Artisan%22%5D%2C%0A%09width%3A%201024%2C%20%0A%09height%3A%20768%2C%20%0A%09autoPlay%3A%20true%2C%0A%09autoLoop%3A%20true%2C%20%0A%09autoRestart%3Atrue%2C%0A%09maximumIdleDuration%3A3%0A%09%7D%29.make%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Example Code on WWDC talk</span>
+
+    Keynote = Application(<span class="hljs-string">"Keynote"</span>)
+
+    Keynote.activate() <span class="hljs-comment">//foreground</span>
+
+    <span class="hljs-comment">//document class, make it a method, and add make verb at the end.</span>
+    <span class="hljs-comment">//newDoc = Keynote.Document().make()</span>
+
+    <span class="hljs-comment">//can create with properties set as record</span>
+    doc = Keynote.Document({
+  <span class="hljs-symbol">      documentTheme:</span>Keynote.themes[<span class="hljs-string">"Artisan"</span>],
+  <span class="hljs-symbol">      width:</span> <span class="hljs-number">1024</span>,
+  <span class="hljs-symbol">      height:</span> <span class="hljs-number">768</span>,
+  <span class="hljs-symbol">      autoPlay:</span> true,
+  <span class="hljs-symbol">      autoLoop:</span> true,
+  <span class="hljs-symbol">      autoRestart:</span>true,
+  <span class="hljs-symbol">      maximumIdleDuration:</span><span class="hljs-number">3</span>
+        }).make();
+  </code></pre>
+  <hr>
+  <p>  <a name="apple-ref-reference-doc-examples"></a>
+    <h4> Apple Ref Reference Doc Examples</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//Trying%20to%20implement%20Apple%20Example%20Code%2C%20but%20it%20doesn%27t%20work%20out%20of%20box.%0A%0AMail%20%3D%20Application%28%27Mail%27%29%0ATextEdit%20%3D%20Application%28%27TextEdit%27%29%0A%0AMail.name%0A%0A%0Apara%20%3D%20TextEdit.Paragraph%28%7B%7D%2C%20%27Some%20text%27%29%0ATextEdit.documents%5B0%5D.paragraphs.push%28para%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">//Trying to implement Apple Example Code, but it doesn't work out of box.</span>
+
+    Mail = Application(<span class="hljs-string">'Mail'</span>)
+    TextEdit = Application(<span class="hljs-string">'TextEdit'</span>)
+
+    Mail.<span class="hljs-keyword">name</span>
+
+
+    para = TextEdit.Paragraph(<span class="hljs-comment">{}</span>, <span class="hljs-string">'Some text'</span>)
+    TextEdit.documents[<span class="hljs-number">0</span>].paragraphs.push(para);
+  </code></pre>
+  <hr>
+  <p>  <a name="apple-ref-ui-text-prompt"></a>
+    <h4> Apple Ref UI Text Prompt</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Include%20Apple%27s%20UI%20elements%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0A%0Avar%20response%20%3D%20app.displayDialog%28%22What%27s%20your%20name%3F%22%2C%20%7B%0A%20%20%20%20defaultAnswer%3A%20%22%22%2C%0A%20%20%20%20withIcon%3A%20%22note%22%2C%0A%20%20%20%20buttons%3A%20%5B%22Cancel%22%2C%20%22Continue%22%5D%2C%0A%20%20%20%20defaultButton%3A%20%22Continue%22%0A%7D%29%0A//%20Result%3A%20%7B%22buttonReturned%22%3A%22Continue%22%2C%20%22textReturned%22%3A%22Jen%22%7D%0Aapp.displayDialog%28%22Hello%2C%20%22%20%2B%20%28response.textReturned%29%20%2B%20%22.%22%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    // Include Apple's UI elements
+    var <span class="hljs-attr">app</span> = Application.currentApplication()
+    app.<span class="hljs-attr">includeStandardAdditions</span> = <span class="hljs-literal">true</span>
+
+    var <span class="hljs-attr">response</span> = app.displayDialog(<span class="hljs-string">"What's your name?"</span>, {
+        defaultAnswer: <span class="hljs-string">""</span>,
+        withIcon: <span class="hljs-string">"note"</span>,
+        buttons: [<span class="hljs-string">"Cancel"</span>, <span class="hljs-string">"Continue"</span>],
+        defaultButton: <span class="hljs-string">"Continue"</span>
+    })
+    // Result: {<span class="hljs-string">"buttonReturned"</span>:<span class="hljs-string">"Continue"</span>, <span class="hljs-string">"textReturned"</span>:<span class="hljs-string">"Jen"</span>}
+    app.displayDialog(<span class="hljs-string">"Hello, "</span> + (response.textReturned) + <span class="hljs-string">"."</span>);
+  </code></pre>
+  <hr>
+  <p>  <a name="apple-ref-write-to-file"></a>
+    <h4> Apple Ref Write to File</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0A%0Afunction%20writeTextToFile%28text%2C%20file%2C%20overwriteExistingContent%29%20%7B%0A%20%20%20%20try%20%7B%0A%0A%20%20%20%20%20%20%20%20//%20Convert%20the%20file%20to%20a%20string%0A%20%20%20%20%20%20%20%20var%20fileString%20%3D%20file.toString%28%29%0A%0A%20%20%20%20%20%20%20%20//%20Open%20the%20file%20for%20writing%0A%20%20%20%20%20%20%20%20var%20openedFile%20%3D%20app.openForAccess%28Path%28fileString%29%2C%20%7B%20writePermission%3A%20true%20%7D%29%0A%0A%20%20%20%20%20%20%20%20//%20Clear%20the%20file%20if%20content%20should%20be%20overwritten%0A%20%20%20%20%20%20%20%20if%20%28overwriteExistingContent%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20app.setEof%28openedFile%2C%20%7B%20to%3A%200%20%7D%29%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20//%20Write%20the%20new%20content%20to%20the%20file%0A%20%20%20%20%20%20%20%20app.write%28text%2C%20%7B%20to%3A%20openedFile%2C%20startingAt%3A%20app.getEof%28openedFile%29%20%7D%29%0A%0A%20%20%20%20%20%20%20%20//%20Close%20the%20file%0A%20%20%20%20%20%20%20%20app.closeAccess%28openedFile%29%0A%0A%20%20%20%20%20%20%20%20//%20Return%20a%20boolean%20indicating%20that%20writing%20was%20successful%0A%20%20%20%20%20%20%20%20return%20true%0A%20%20%20%20%7D%0A%20%20catch%28error%29%7B%0A%0A%20%20%20%20%20%20%20%20try%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20//%20Close%20the%20file%0A%20%20%20%20%20%20%20%20%20%20%20%20app.closeAccess%28file%29%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20catch%28error%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20//%20Report%20the%20error%20is%20closing%20failed%0A%20%20%20%20%20%20%20%20%20%20%20%20console.log%28%60Couldn%27t%20close%20file%3A%20%24%7Berror%7D%60%29%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20//%20Return%20a%20boolean%20indicating%20that%20writing%20was%20successful%0A%20%20%20%20%20%20%20%20return%20false%0A%20%20%20%20%7D%0A%7D%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">app</span> = Application.currentApplication()
+    <span class="hljs-keyword">app</span>.includeStandardAdditions = true
+
+    function writeTextToFile(text, <span class="hljs-keyword">file</span>, overwriteExistingContent) {
+        try {
+
+            <span class="hljs-comment">// Convert the file to a string</span>
+            <span class="hljs-keyword">var</span> fileString = <span class="hljs-keyword">file</span>.<span class="hljs-keyword">toString</span>()
+
+            <span class="hljs-comment">// Open the file for writing</span>
+            <span class="hljs-keyword">var</span> openedFile = <span class="hljs-keyword">app</span>.openForAccess(Path(fileString), { writePermission: true })
+
+            <span class="hljs-comment">// Clear the file if content should be overwritten</span>
+            <span class="hljs-keyword">if</span> (overwriteExistingContent) {
+                <span class="hljs-keyword">app</span>.setEof(openedFile, { to: 0 })
+            }
+
+            <span class="hljs-comment">// Write the new content to the file</span>
+            <span class="hljs-keyword">app</span>.write(text, { to: openedFile, startingAt: <span class="hljs-keyword">app</span>.getEof(openedFile) })
+
+            <span class="hljs-comment">// Close the file</span>
+            <span class="hljs-keyword">app</span>.closeAccess(openedFile)
+
+            <span class="hljs-comment">// Return a boolean indicating that writing was successful</span>
+            <span class="hljs-keyword">return</span> true
+        }
+      catch(<span class="hljs-keyword">error</span>){
+
+            try {
+                <span class="hljs-comment">// Close the file</span>
+                <span class="hljs-keyword">app</span>.closeAccess(<span class="hljs-keyword">file</span>)
+            }
+            catch(<span class="hljs-keyword">error</span>) {
+                <span class="hljs-comment">// Report the error is closing failed</span>
+                console.<span class="hljs-built_in">log</span>(<span class="hljs-symbol">`Couldn'</span>t <span class="hljs-keyword">close</span> <span class="hljs-keyword">file</span>: <span class="hljs-variable">${error}</span>`)
+            }
+
+            <span class="hljs-comment">// Return a boolean indicating that writing was successful</span>
+            <span class="hljs-keyword">return</span> false
+        }
+    };
+  </code></pre>
+  <hr>
+  <p>  <a name="apple-ref-standard-applications"></a>
+    <h4> Apple Ref standard applications</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Loads%20Apple%27s%20UI%20elements%20and%20others.%20%0Aapp%20%3D%20Application.currentApplication%28%29%0A%0Aapp.includeStandardAdditions%20%3D%20true%0A%0Aapp.say%28%27Greetings%27%29%0A%0AdialogResult%20%3D%20app.displayDialog%28%27Please%20enter%20your%20name%27%2C%20%7B%20%0A%09withTitle%3A%20%27Greetings%27%2C%0A%09defaultAnswer%3A%20%27%27%2C%20%0A%09buttons%3A%20%5B%22Goodbye%22%2C%20%22Hello%22%5D%2C%20%0A%09defaultButton%3A%202%0A%7D%29%0A%0Aif%20%28dialogResult.buttonReturned%20%3D%3D%20%22Hello%22%29%20%7B%0A%09app.say%28%27Hello%20%27%20%2B%20dialogResult.textReturned%29%0A%09%7D%20else%20%7B%0A%09app.say%28%27Goodbye%27%20%2B%20dialogResult.textReturned%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Loads Apple's UI elements and others.</span>
+    app = Application.currentApplication()
+
+    app.includeStandardAdditions = <span class="hljs-literal">true</span>
+
+    app.<span class="hljs-built_in">say</span>(<span class="hljs-string">'Greetings'</span>)
+
+    dialogResult = app.displayDialog(<span class="hljs-string">'Please enter your name'</span>, {
+        withTitle: <span class="hljs-string">'Greetings'</span>,
+        defaultAnswer: <span class="hljs-string">''</span>,
+        buttons: [<span class="hljs-string">"Goodbye"</span>, <span class="hljs-string">"Hello"</span>],
+        defaultButton: <span class="hljs-number">2</span>
+    })
+
+    <span class="hljs-keyword">if</span> (dialogResult.buttonReturned == <span class="hljs-string">"Hello"</span>) {
+        app.<span class="hljs-built_in">say</span>(<span class="hljs-string">'Hello '</span> + dialogResult.textReturned)
+        } <span class="hljs-keyword">else</span> {
+        app.<span class="hljs-built_in">say</span>(<span class="hljs-string">'Goodbye'</span> + dialogResult.textReturned);
+  </code></pre>
+  <hr>
+  <p>  <a name="appleref-create-calendar"></a>
+    <h4> AppleRef Create Calendar</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Creates%20a%20Calendar%0A%0Avar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0Avar%20calendarName%20%3D%20%22Demo%22%0Avar%20calendarDescription%20%3D%20%22Demo%20Calendar%22%0Avar%20newCalendar%20%3D%20Calendar.Calendar%28%7Bname%3A%20calendarName%2C%20description%3A%20calendarDescription%7D%29.make%28%29%0A//%20Result%3A%20Application%28%22Calendar%22%29.calendars.at%283%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Creates a Calendar</span>
+
+    <span class="hljs-selector-tag">var</span> Calendar = Application(<span class="hljs-string">"Calendar"</span>)
+    <span class="hljs-selector-tag">var</span> calendarName = <span class="hljs-string">"Demo"</span>
+    <span class="hljs-selector-tag">var</span> calendarDescription = <span class="hljs-string">"Demo Calendar"</span>
+    <span class="hljs-selector-tag">var</span> newCalendar = Calendar.Calendar({name: calendarName, description: calendarDescription}).make()
+    <span class="hljs-comment">// Result: Application("Calendar").calendars.at(3);</span>
+  </code></pre>
+  <hr>
+  <p>  <a name="appleref-create-an-event-tomorrow-at-1500"></a>
+    <h4> AppleRef Create an Event tomorrow at 1500</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0Avar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0A%0Avar%20eventStart%20%3D%20app.currentDate%28%29%0AeventStart%20%3D%20eventStart%0AeventStart.setDate%28eventStart.getDate%28%29%20%2B%201%29%0AeventStart.setHours%2815%29%0AeventStart.setMinutes%280%29%0AeventStart.setSeconds%280%29%0Avar%20eventEnd%20%3D%20new%20Date%28eventStart.getTime%28%29%29%0AeventEnd.setHours%2816%29%0A%0Avar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22DEMO%22%7D%29%0A//Use%20the%20first%20result%20that%20matches%20name%20search%0Avar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%0Avar%20event%20%3D%20Calendar.Event%28%7Bsummary%3A%20%22Important%20Meeting%21%22%2C%20startDate%3A%20eventStart%2C%20endDate%3A%20eventEnd%7D%29%0AprojectCalendar.events.push%28event%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-keyword">var</span> app = Application.currentApplication()
+    app.includeStandardAdditions = <span class="hljs-literal">true</span>
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">"Calendar"</span>)
+
+    <span class="hljs-keyword">var</span> eventStart = app.currentDate()
+    eventStart = eventStart
+    eventStart.setDate(eventStart.getDate() + <span class="hljs-number">1</span>)
+    eventStart.setHours(<span class="hljs-number">15</span>)
+    eventStart.setMinutes(<span class="hljs-number">0</span>)
+    eventStart.setSeconds(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">var</span> eventEnd = <span class="hljs-keyword">new</span> Date(eventStart.getTime())
+    eventEnd.setHours(<span class="hljs-number">16</span>)
+
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({name: <span class="hljs-string">"DEMO"</span>})
+    <span class="hljs-comment">//Use the first result that matches name search</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">event</span> = Calendar.Event({summary: <span class="hljs-string">"Important Meeting!"</span>, startDate: eventStart, endDate: eventEnd})
+    projectCalendar.events.push(<span class="hljs-keyword">event</span>);
+  </code></pre>
+  <hr>
+  <p>  <a name="appleref-reveal-an-event"></a>
+    <h4> AppleRef Reveal an Event</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A////Requires%20%22Demo%22%20calendar%20with%20events%0A%0Avar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0D%0Dvar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22Demo%22%7D%29%0Dvar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%20%0Dvar%20events%20%3D%20projectCalendar.events.whose%28%7Bsummary%3A%20%22Important%20Meeting%21%22%7D%29%0Dvar%20event%20%3D%20events%5B0%5D%0Devent.show%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment"><span class="hljs-doctag">///</span>/Requires "Demo" calendar with events</span>
+
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">"Calendar"</span>)
+
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({name: <span class="hljs-string">"Demo"</span>})
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">var</span> events = projectCalendar.events.whose({summary: <span class="hljs-string">"Important Meeting!"</span>})
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">event</span> = events[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">event</span>.show();
+  </code></pre>
+  <hr>
+  <p>  <a name="appleref-read-file-fails"></a>
+    <h4> AppleRef read file FAILS</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=var%20app%20%3D%20Application.currentApplication%28%29%0Dapp.includeStandardAdditions%20%3D%20true%0A%0Avar%20file%20%3D%20app.chooseFile%28%7B%0A%20%20%20%20ofType%3A%20%22txt%22%2C%0A%20%20%20%20withPrompt%3A%20%22Please%20select%20a%20text%20file%20to%20read%3A%22%0A%7D%29%0A%0AreadFile%28file%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-keyword">var</span> <span class="hljs-keyword">app</span> = Application.currentApplication()
+    <span class="hljs-keyword">app</span>.includeStandardAdditions = true
+
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">file</span> = <span class="hljs-keyword">app</span>.chooseFile({
+        ofType: <span class="hljs-string">"txt"</span>,
+        withPrompt: <span class="hljs-string">"Please select a text file to read:"</span>
+    })
+
+    readFile(<span class="hljs-keyword">file</span>);
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-count-number-of-events"></a>
+    <h4> Calendar Count Number of Events</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//How%20to%20count%20number%20of%20events%20in%20a%20library%3F%0A%0A//%20All%20calendars%0AApplication%28%27Calendar%27%29.calendars.events.length%0A%0A//First%20Calendar%20in%20your%20List%0AApplication%28%27Calendar%27%29.calendars%5B0%5D.events.length%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">//How to count number of events in a library?</span>
+
+    <span class="hljs-comment">// All calendars</span>
+    <span class="hljs-selector-tag">Application</span>(<span class="hljs-string">'Calendar'</span>)<span class="hljs-selector-class">.calendars</span><span class="hljs-selector-class">.events</span><span class="hljs-selector-class">.length</span>
+
+    <span class="hljs-comment">//First Calendar in your List</span>
+    <span class="hljs-selector-tag">Application</span>(<span class="hljs-string">'Calendar'</span>)<span class="hljs-selector-class">.calendars</span><span class="hljs-selector-attr">[0]</span><span class="hljs-selector-class">.events</span><span class="hljs-selector-class">.length</span>;
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-create-1-hour-event-starting-now"></a>
+    <h4> Calendar Create 1 hour event starting now</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Sometimes%20on%20first%20run%20it%20fails%20with%20invalid%20index%2C%20but%20unable%20to%20repeat%0A%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0A%0A////Requires%20%22Demo%22%20calendar%20with%20events%0A//Create%20new%20event%20starting%20now%20and%20ending%20in%20one%20hour%0A%0A//Set%20Calendar%20to%20be%20the%20Application%20Calendar%0Avar%20Calendar%20%3D%20Application%28%27Calendar%27%29%20%0A%0A//Set%20name%20of%20Calendar%20you%20are%20using%0Avar%20calendarUsed%20%3D%20%22Demo%22%3B%0A%0A//use%20Demo%20as%20the%20used%20Calendar%20by%20searching%20for%20it.%0Avar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20calendarUsed%7D%29%3B%0A//Use%20the%20first%20result%20that%20matches%20name%20search%0Avar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%3B%0A%0A//You%20need%20the%20time%20now%20as%20an%20object%0Avar%20timeNow%20%3D%20new%20Date%28%29%3B%0A%0A//inAnHour%20as%20well%0Avar%20inAnHour%20%3D%20new%20Date%28%29%3B%0A%0A//Create%20Date%20object%20one%20hour%20ago%20for%20search%20criteria%20%0AinAnHour.setHours%28timeNow.getHours%28%29%2B1%29%3B%0A%0A%0A//Create%20new%20event%20with%20values%20from%20pervious%20event%20and%20end%20time%20of%20timeNow%0AnewEvent%3DCalendar.Event%28%7Bsummary%3A%20%22Demo%20Event%22%2C%20startDate%3A%20timeNow%2C%20endDate%3A%20inAnHour%7D%29%3B%0A%0A%0A//Fails%20with%20invalid%20index%20on%20first%20run.%20%0AprojectCalendar.events.push%28newEvent%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    // Sometimes on first run it fails with invalid index, but unable to repeat
+
+    var app = Application.currentApplication()
+    app.includeStandardAdditions = true
+
+    ////Requires "Demo" calendar with events
+    //<span class="hljs-keyword">Create</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">event</span> <span class="hljs-keyword">starting</span> <span class="hljs-keyword">now</span> <span class="hljs-keyword">and</span> ending <span class="hljs-keyword">in</span> one <span class="hljs-keyword">hour</span>
+
+    //<span class="hljs-keyword">Set</span> Calendar <span class="hljs-keyword">to</span> be the Application Calendar
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">'Calendar'</span>)
+
+    //<span class="hljs-keyword">Set</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">of</span> Calendar you <span class="hljs-keyword">are</span> <span class="hljs-keyword">using</span>
+    <span class="hljs-keyword">var</span> calendarUsed = <span class="hljs-string">"Demo"</span>;
+
+    //<span class="hljs-keyword">use</span> Demo <span class="hljs-keyword">as</span> the used Calendar <span class="hljs-keyword">by</span> searching <span class="hljs-keyword">for</span> it.
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({<span class="hljs-keyword">name</span>: calendarUsed});
+    //<span class="hljs-keyword">Use</span> the <span class="hljs-keyword">first</span> <span class="hljs-keyword">result</span> that matches <span class="hljs-keyword">name</span> <span class="hljs-keyword">search</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>];
+
+    //You need the time now as an object
+    var timeNow = new Date();
+
+    //inAnHour as well
+    var inAnHour = new Date();
+
+    //<span class="hljs-keyword">Create</span> <span class="hljs-built_in">Date</span> <span class="hljs-keyword">object</span> one <span class="hljs-keyword">hour</span> ago <span class="hljs-keyword">for</span> <span class="hljs-keyword">search</span> criteria
+    inAnHour.setHours(timeNow.getHours()+<span class="hljs-number">1</span>);
+
+
+    //<span class="hljs-keyword">Create</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">event</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">values</span> <span class="hljs-keyword">from</span> pervious <span class="hljs-keyword">event</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">end</span> <span class="hljs-keyword">time</span> <span class="hljs-keyword">of</span> timeNow
+    newEvent=Calendar.Event({summary: <span class="hljs-string">"Demo Event"</span>, startDate: timeNow, endDate: inAnHour});
+
+
+    //Fails with invalid index on first run.
+    projectCalendar.events.push(newEvent);
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-delete-event-byid"></a>
+    <h4> Calendar Delete Event byId</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A////Requires%20%22Demo%22%20calendar%20with%20events%0A%0A//Creates%20new%20Event%20with%20same%20startDate%20as%20current%20event%20and%20endDate%20as%20Now%0A//%20Deletes%20the%20event%20it%20replaces%0A%0A%0A//%20Add%20standard%20library%20for%20dialog%20boxes%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0A%0A//Set%20Calendar%20to%20be%20the%20Application%20Calendar%0Avar%20Calendar%20%3D%20Application%28%27Calendar%27%29%20%0A%0A//Set%20name%20of%20Calendar%20you%20are%20using%0Avar%20calendarUsed%20%3D%20%22Demo%22%3B%0A%0A//use%20Demo%20as%20the%20used%20Calendar%20by%20searching%20for%20it.%0Avar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20calendarUsed%7D%29%0A//Use%20the%20first%20result%20that%20matches%20name%20search%0Avar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%0A%0A%0A%0Avar%20testEvents%20%3D%20projectCalendar.events.whose%28%7B%20summary%3A%20%22TEST%22%7D%29%3B%0A%0A//set%20recentEvent%20to%20be%20the%20first%20in%20the%20results%20of%20search.%20%0A//TODO%20deal%20with%20more%20than%20one%20search%20result%0Avar%20testEvent%20%3D%20testEvents%5B0%5D%0A%0AeventId%20%3D%20testEvent.id%28%29%20%0A//Delete%20the%20event%20with%20the%20old%20end%20time.%0A%0ACalendar.delete%28projectCalendar.events.byId%28eventId%29%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    ////Requires "Demo" calendar with events
+
+    //Creates new Event with same startDate as current event and endDate as Now
+    // Deletes the event it replaces
+
+
+    // Add standard library for dialog boxes
+    var app = Application.currentApplication()
+    app.includeStandardAdditions = true
+
+    //<span class="hljs-keyword">Set</span> Calendar <span class="hljs-keyword">to</span> be the Application Calendar
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">'Calendar'</span>)
+
+    //<span class="hljs-keyword">Set</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">of</span> Calendar you <span class="hljs-keyword">are</span> <span class="hljs-keyword">using</span>
+    <span class="hljs-keyword">var</span> calendarUsed = <span class="hljs-string">"Demo"</span>;
+
+    //<span class="hljs-keyword">use</span> Demo <span class="hljs-keyword">as</span> the used Calendar <span class="hljs-keyword">by</span> searching <span class="hljs-keyword">for</span> it.
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({<span class="hljs-keyword">name</span>: calendarUsed})
+    //<span class="hljs-keyword">Use</span> the <span class="hljs-keyword">first</span> <span class="hljs-keyword">result</span> that matches <span class="hljs-keyword">name</span> <span class="hljs-keyword">search</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]
+
+
+
+    <span class="hljs-keyword">var</span> testEvents = projectCalendar.events.whose({ summary: <span class="hljs-string">"TEST"</span>});
+
+    //<span class="hljs-keyword">set</span> recentEvent <span class="hljs-keyword">to</span> be the <span class="hljs-keyword">first</span> <span class="hljs-keyword">in</span> the results <span class="hljs-keyword">of</span> search.
+    //TODO deal <span class="hljs-keyword">with</span> more <span class="hljs-keyword">than</span> one <span class="hljs-keyword">search</span> <span class="hljs-keyword">result</span>
+    <span class="hljs-keyword">var</span> testEvent = testEvents[<span class="hljs-number">0</span>]
+
+    eventId = testEvent.id()
+    //<span class="hljs-keyword">Delete</span> the <span class="hljs-keyword">event</span> <span class="hljs-keyword">with</span> the <span class="hljs-keyword">old</span> <span class="hljs-keyword">end</span> time.
+
+    Calendar.delete(projectCalendar.events.byId(eventId));
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-event-create-and-add-event-elements"></a>
+    <h4> Calendar Event Create and Add Event Elements</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//Event%20elements%20can%20be%20added%2C%20properties%20cannot%20be%20changed%0A////Requires%20%22Demo%22%20calendar%20with%20events%0A%0A%0A//Set%20Calendar%20to%20be%20the%20Application%20Calendar%0Avar%20Calendar%20%3D%20Application%28%27Calendar%27%29%20%0A%0A//use%20Demo%20as%20the%20used%20Calendar%20by%20searching%20for%20it.%0Avar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22Demo%22%7D%29%0A//Use%20the%20first%20result%20that%20matches%20name%20search%0Avar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%0A%0A//new%20keyword%20makes%20Date%20object%0Avar%20timeNow%20%3D%20new%20Date%28%29%0A%0A%0A//Creation%20of%20a%20new%20event%20with%20same%20start%20and%20end%20time%20as%20the%20pulled%20event%0AnewEvent%3DCalendar.Event%28%7Bsummary%3A%20%22TEST%22%2C%20startDate%3A%20timeNow%2C%20endDate%3A%20timeNow%7D%29%0A//%20Push%20the%20event%20to%20the%20calendar%0AprojectCalendar.events.push%28newEvent%29%0A%0A//Choose%20which%20event%20I%20will%20edit.%20In%20this%20case%20first%20one.%20Could%20also%20be%20.last%20or%20array%20value%20%5B%5D%0Avar%20event%20%3D%20projectCalendar.events.last%28%29%0D//%20attendee%20is%20made%20as%20a%20function.%20Class%20Event%20contains%20element%20attendeess%2C%20which%20is%20why%20I%20can%20add%28push%29%20attendees.%20%0Dvar%20attendee%20%3D%20Calendar.Attendee%28%7Bemail%3A%20%22example%40apple.com%22%7D%29%0D%0Aevent.attendees.push%28attendee%29%0A%0Aevent.attendees%5B0%5D%28%29%3B%0Aevent.startDate%28%29%3B%0A//new%20Event%28myEvent%29%0A//projectCalendar.events.length%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    //Event elements can be added, properties cannot be changed
+    ////Requires "Demo" calendar with events
+
+
+    //<span class="hljs-keyword">Set</span> Calendar <span class="hljs-keyword">to</span> be the Application Calendar
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">'Calendar'</span>)
+
+    //<span class="hljs-keyword">use</span> Demo <span class="hljs-keyword">as</span> the used Calendar <span class="hljs-keyword">by</span> searching <span class="hljs-keyword">for</span> it.
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({<span class="hljs-keyword">name</span>: <span class="hljs-string">"Demo"</span>})
+    //<span class="hljs-keyword">Use</span> the <span class="hljs-keyword">first</span> <span class="hljs-keyword">result</span> that matches <span class="hljs-keyword">name</span> <span class="hljs-keyword">search</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]
+
+    //<span class="hljs-keyword">new</span> keyword makes <span class="hljs-built_in">Date</span> <span class="hljs-keyword">object</span>
+    <span class="hljs-keyword">var</span> timeNow = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+
+
+    //<span class="hljs-keyword">Creation</span> <span class="hljs-keyword">of</span> a <span class="hljs-keyword">new</span> <span class="hljs-keyword">event</span> <span class="hljs-keyword">with</span> same <span class="hljs-keyword">start</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">end</span> <span class="hljs-keyword">time</span> <span class="hljs-keyword">as</span> the pulled <span class="hljs-keyword">event</span>
+    newEvent=Calendar.Event({summary: <span class="hljs-string">"TEST"</span>, startDate: timeNow, endDate: timeNow})
+    // Push the <span class="hljs-keyword">event</span> <span class="hljs-keyword">to</span> the calendar
+    projectCalendar.events.push(newEvent)
+
+    //<span class="hljs-keyword">Choose</span> which <span class="hljs-keyword">event</span> I will edit. <span class="hljs-keyword">In</span> this <span class="hljs-keyword">case</span> <span class="hljs-keyword">first</span> one. Could also be .last <span class="hljs-keyword">or</span> <span class="hljs-built_in">array</span> <span class="hljs-keyword">value</span> []
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">event</span> = projectCalendar.events.last()
+    // attendee <span class="hljs-keyword">is</span> made <span class="hljs-keyword">as</span> a function. <span class="hljs-keyword">Class</span> <span class="hljs-keyword">Event</span> contains <span class="hljs-keyword">element</span> attendeess, which <span class="hljs-keyword">is</span> why I can <span class="hljs-keyword">add</span>(push) attendees.
+    <span class="hljs-keyword">var</span> attendee = Calendar.Attendee({email: <span class="hljs-string">"example@apple.com"</span>})
+    event.attendees.push(attendee)
+
+    event.attendees[<span class="hljs-number">0</span>]();
+    event.startDate();
+    //new Event(myEvent)
+    //projectCalendar.events.length;
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-event-search"></a>
+    <h4> Calendar Event Search</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A////Requires%20%22Demo%22%20calendar%20with%20events%0A%0A%0Avar%20Calendar%20%3D%20Application%28%27Calendar%27%29%20%0A//%20Create%20demoDays%20object%2C%20which%20is%20an%20array%20of%20events%20where%20summaries%20start%20with%20Blog%20%20%0Avar%20demoDays%20%3D%20Application%28%27Calendar%27%29.calendars%5B12%5D.events.whose%28%7B%20summary%3A%20%7B%20_beginsWith%3A%20%27Demo%27%20%7D%20%7D%29%28%29%0A//Result%3A%20%5BApplication%28%22Calendar%22%29.calendars.byId%28%223E7ADB20-0113-4FD7-B04B-2AA470B83380%22%29.events.byId%28%225D241B42-D0EF-4312-B99F-E1E38A2E09A0%22%29%2C%20Application%28%22Calendar%22%29.calendars.byId%28%223E7ADB20-0113-4FD7-B04B-2AA470B83380%22%29.events.byId%28%22C6E3B842-AAB3-4E95-8106-918E1FCB1C4C%22%29%5D%0A%0A%0A//Number%20of%20events%20starting%20with%20Blog%20in%20the%20Demo%20Calendar%0AdemoDays.length%0A//Result%3A%202%0A%0A//%20Summary%20of%20first%20event%20returned%0AdemoDays%5B0%5D.summary%28%29%0A//%20Result%3A%20%22Blog%20Apple%20launchd%22%0A%0A//%20Date%20event%20started%0AdemoDays%5B0%5D.startDate%28%29%0A//%20Result%3A%20Fri%20Jul%2019%202019%2008%3A50%3A00%20GMT%2B0200%20%28CEST%29%0A//%20it%20is%20an%20%22object%22%0A%0A%0A//Date%20in%20milliseconds%0ADate.now%28%29%0A//Result%3A%201584451353422%0A%0Avar%20timeNow%20%3D%20new%20Date%28%29%0A//new%20keyword%20makes%20Date%20object%0A%0Avar%20oneHour%20%3D%2060%20%2A%2060%20%2A%201000%3B%0A//Create%20Date%20object%20that%20is%20one%20hour%20ago%20timeNow.%0Avar%20anHourAgo%20%3D%20new%20Date%28new%20Date%28%29%20-%20oneHour%29%3B%0A%0A%0A%0A//https%3A//stackoverflow.com/questions/38023712/comparisons-rich-queries-in-javascript-for-automation-jxa-whose%0Avar%20recentDemoEvents%20%3D%20Application%28%27Calendar%27%29.calendars%5B12%5D.events.whose%28%7B%0A%09_and%3A%20%5B%0A%09%09%7B%20startDate%3A%20%7B%20_greaterThan%3A%20anHourAgo%20%7D%7D%2C%20%0A%09%09%7B%20startDate%3A%20%7B%20_lessThan%3A%20timeNow%7D%7D%0A%09%5D%0A%7D%29%3B%0A%0A%0A%0A%0A//Array%20of%20events%20that%20started%20in%20the%20past%20hour.%0ArecentDemoEvents%28%29%3B%0A%0A//Single%20event%27s%20summary%20that%20started%20in%20past%20hour%20from%20the%20Demo%20Calendar%0ArecentDemoEvents%5B0%5D%28%29.summary%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">////Requires "Demo" calendar with events</span>
+
+
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">'Calendar'</span>)
+    <span class="hljs-comment">// Create demoDays object, which is an array of events where summaries start with Blog</span>
+    <span class="hljs-keyword">var</span> demoDays = Application(<span class="hljs-string">'Calendar'</span>).calendars[<span class="hljs-number">12</span>].events.whose({ <span class="hljs-attr">summary</span>: { <span class="hljs-attr">_beginsWith</span>: <span class="hljs-string">'Demo'</span> } })()
+    <span class="hljs-comment">//Result: [Application("Calendar").calendars.byId("3E7ADB20-0113-4FD7-B04B-2AA470B83380").events.byId("5D241B42-D0EF-4312-B99F-E1E38A2E09A0"), Application("Calendar").calendars.byId("3E7ADB20-0113-4FD7-B04B-2AA470B83380").events.byId("C6E3B842-AAB3-4E95-8106-918E1FCB1C4C")]</span>
+
+
+    <span class="hljs-comment">//Number of events starting with Blog in the Demo Calendar</span>
+    demoDays.length
+    <span class="hljs-comment">//Result: 2</span>
+
+    <span class="hljs-comment">// Summary of first event returned</span>
+    demoDays[<span class="hljs-number">0</span>].summary()
+    <span class="hljs-comment">// Result: "Blog Apple launchd"</span>
+
+    <span class="hljs-comment">// Date event started</span>
+    demoDays[<span class="hljs-number">0</span>].startDate()
+    <span class="hljs-comment">// Result: Fri Jul 19 2019 08:50:00 GMT+0200 (CEST)</span>
+    <span class="hljs-comment">// it is an "object"</span>
+
+
+    <span class="hljs-comment">//Date in milliseconds</span>
+    <span class="hljs-built_in">Date</span>.now()
+    <span class="hljs-comment">//Result: 1584451353422</span>
+
+    <span class="hljs-keyword">var</span> timeNow = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+    <span class="hljs-comment">//new keyword makes Date object</span>
+
+    <span class="hljs-keyword">var</span> oneHour = <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>;
+    <span class="hljs-comment">//Create Date object that is one hour ago timeNow.</span>
+    <span class="hljs-keyword">var</span> anHourAgo = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() - oneHour);
+
+
+
+    <span class="hljs-comment">//https://stackoverflow.com/questions/38023712/comparisons-rich-queries-in-javascript-for-automation-jxa-whose</span>
+    <span class="hljs-keyword">var</span> recentDemoEvents = Application(<span class="hljs-string">'Calendar'</span>).calendars[<span class="hljs-number">12</span>].events.whose({
+        <span class="hljs-attr">_and</span>: [
+            { <span class="hljs-attr">startDate</span>: { <span class="hljs-attr">_greaterThan</span>: anHourAgo }},
+            { <span class="hljs-attr">startDate</span>: { <span class="hljs-attr">_lessThan</span>: timeNow}}
+        ]
+    });
+
+
+
+
+    <span class="hljs-comment">//Array of events that started in the past hour.</span>
+    recentDemoEvents();
+
+    <span class="hljs-comment">//Single event's summary that started in past hour from the Demo Calendar</span>
+    recentDemoEvents[<span class="hljs-number">0</span>]().summary();
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-find-events-in-past-hour"></a>
+    <h4> Calendar Find Events in past hour</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//Find%20Event%20in%20past%20hour%20in%20specific%20calendar.%20%0A//the%20events%20are%20not%20in%20order%20in%20the%20Calendar.events%20array%2C%20therefore%20you%20need%20specify%20time%20frames%0A%0Avar%20Calendar%20%3D%20Application%28%27Calendar%27%29%20%0ACalendar.reloadCalendars%28%29%3B%0A%0A//Use%20the%20Demo%20calendar%0AusedCalendar%3DApplication%28%27Calendar%27%29.calendars%5B12%5D%0A%0A%0Avar%20timeNow%20%3D%20new%20Date%28%29%0A//new%20keyword%20makes%20Date%20object%0A%0Avar%20oneHour%20%3D%2060%20%2A%2060%20%2A%201000%3B%0A//Create%20Date%20object%20that%20is%20one%20hour%20ago%20timeNow.%0Avar%20anHourAgo%20%3D%20new%20Date%28new%20Date%28%29%20-%20oneHour%29%3B%0A%0A%0A%0A//https%3A//stackoverflow.com/questions/38023712/comparisons-rich-queries-in-javascript-for-automation-jxa-whose%0Avar%20recentDemoEvents%20%3D%20Application%28%27Calendar%27%29.calendars%5B12%5D.events.whose%28%7B%0A%09_and%3A%20%5B%0A%09%09%7B%20startDate%3A%20%7B%20_greaterThan%3A%20anHourAgo%20%7D%7D%2C%20%0A%09%09%7B%20startDate%3A%20%7B%20_lessThan%3A%20timeNow%7D%7D%0A%09%5D%0A%7D%29%3B%0A%0A%0A%0A%0A//Array%20of%20event%20functions%20that%20started%20in%20the%20past%20hour.%20The%20event%20function%20has%20properties%20that%20are%20objects.%0ArecentDemoEvents%28%29%3B%0A%0A//Single%20event%20that%20started%20in%20past%20hour%0Atypeof%28recentDemoEvents%5B0%5D%28%29.endDate%28%29%29%3B%0A%0ArecentDemoEvents%5B0%5D%28%29%0A//Result%3AApplication%28%22Calendar%22%29.calendars.byId%28%223E7ADB20-0113-4FD7-B04B-2AA470B83380%22%29.events.byId%28%22A9154DCD-9E76-4383-8ABC-5062D578EE5E%22%29%0A%0Avar%20event%20%3D%20recentDemoEvents%5B0%5D%28%29%3B%20%0D//You%20can%20create%20new%20objects%20by%20calling%20class%20constructors%20as%20functions%20%0Aevent%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">//Find Event in past hour in specific calendar.</span>
+    <span class="hljs-comment">//the events are not in order in the Calendar.events array, therefore you need specify time frames</span>
+
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">'Calendar'</span>)
+    Calendar.reloadCalendars();
+
+    <span class="hljs-comment">//Use the Demo calendar</span>
+    usedCalendar=Application(<span class="hljs-string">'Calendar'</span>).calendars[<span class="hljs-number">12</span>]
+
+
+    <span class="hljs-keyword">var</span> timeNow = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+    <span class="hljs-comment">//new keyword makes Date object</span>
+
+    <span class="hljs-keyword">var</span> oneHour = <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>;
+    <span class="hljs-comment">//Create Date object that is one hour ago timeNow.</span>
+    <span class="hljs-keyword">var</span> anHourAgo = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>() - oneHour);
+
+
+
+    <span class="hljs-comment">//https://stackoverflow.com/questions/38023712/comparisons-rich-queries-in-javascript-for-automation-jxa-whose</span>
+    <span class="hljs-keyword">var</span> recentDemoEvents = Application(<span class="hljs-string">'Calendar'</span>).calendars[<span class="hljs-number">12</span>].events.whose({
+        <span class="hljs-attr">_and</span>: [
+            { <span class="hljs-attr">startDate</span>: { <span class="hljs-attr">_greaterThan</span>: anHourAgo }},
+            { <span class="hljs-attr">startDate</span>: { <span class="hljs-attr">_lessThan</span>: timeNow}}
+        ]
+    });
+
+
+
+
+    <span class="hljs-comment">//Array of event functions that started in the past hour. The event function has properties that are objects.</span>
+    recentDemoEvents();
+
+    <span class="hljs-comment">//Single event that started in past hour</span>
+    <span class="hljs-keyword">typeof</span>(recentDemoEvents[<span class="hljs-number">0</span>]().endDate());
+
+    recentDemoEvents[<span class="hljs-number">0</span>]()
+    <span class="hljs-comment">//Result:Application("Calendar").calendars.byId("3E7ADB20-0113-4FD7-B04B-2AA470B83380").events.byId("A9154DCD-9E76-4383-8ABC-5062D578EE5E")</span>
+
+    <span class="hljs-keyword">var</span> event = recentDemoEvents[<span class="hljs-number">0</span>]();
+    <span class="hljs-comment">//You can create new objects by calling class constructors as functions</span>
+    event;
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-get-number-of-events-in-all"></a>
+    <h4> Calendar Get Number of Events in all</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//Read%20the%20number%20of%20Events%20in%20a%20given%20calendar.%20%0A%0AApplication%28%27Calendar%27%29.calendars%5B0%5D.events.length%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">//Read the number of Events in a given calendar.</span>
+
+    <span class="hljs-selector-tag">Application</span>(<span class="hljs-string">'Calendar'</span>)<span class="hljs-selector-class">.calendars</span><span class="hljs-selector-attr">[0]</span><span class="hljs-selector-class">.events</span><span class="hljs-selector-class">.length</span>;
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-open-file-alarm-exploration"></a>
+    <h4> Calendar Open file Alarm exploration</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//Looking%20at%20the%20Alarm%20poperty%20on%20an%20event%0A//%20Requires%20an%20Automator%20calendar%20with%20even%20and%20alarm%20property.%20%0A%0A%0A//%20Working%20with%20Application%20Calendar%0Avar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0A%0A%0A//%20Use%20specific%20calendar%20matching%20name%0Avar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22Automator%22%7D%29%0A%0A%0A//Use%20the%20first%20calendar%20that%20matches%20the%20name%0Avar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%28%29%0A%0A%0A//%20Gets%20information%20for%20the%20last%20created%20element%20in%20calendar%0Avar%20eventinfo%20%3D%20projectCalendar.events.last%28%29%0A%0A//%20Have%20a%20single%20object%20to%20return%20with%20all%20the%20information%0A%0Aeventinfo.openFileAlarms%28%29%3B%0Aeventinfo.properties%28%29%3B%0AprojectCalendar.keys%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">//Looking at the Alarm poperty on an event</span>
+    <span class="hljs-comment">// Requires an Automator calendar with even and alarm property.</span>
+
+
+    <span class="hljs-comment">// Working with Application Calendar</span>
+    <span class="hljs-built_in">var</span> Calendar = Application(<span class="hljs-string">"Calendar"</span>)
+
+
+    <span class="hljs-comment">// Use specific calendar matching name</span>
+    <span class="hljs-built_in">var</span> projectCalendars = Calendar.calendars.whose({name: <span class="hljs-string">"Automator"</span>})
+
+
+    <span class="hljs-comment">//Use the first calendar that matches the name</span>
+    <span class="hljs-built_in">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]()
+
+
+    <span class="hljs-comment">// Gets information for the last created element in calendar</span>
+    <span class="hljs-built_in">var</span> eventinfo = projectCalendar.events.last()
+
+    <span class="hljs-comment">// Have a single object to return with all the information</span>
+
+    eventinfo.openFileAlarms();
+    eventinfo.properties();
+    projectCalendar.<span class="hljs-built_in">keys</span>();
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-read-upcoming-event-into-array"></a>
+    <h4> Calendar Read Upcoming Event into Array</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//https%3A//leancrew.com/all-this/%0A//If%20%22Example%20Event%22%20and%20%22Demo%22%20calendar%20do%20not%20exist%20script%20fails%0A%0Avar%20now%20%3D%20new%28Date%29%0A%0Avar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0Avar%20homeCal%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22Demo%22%7D%29%5B0%5D%0A%0Avar%20swHomeEvents%20%3D%20homeCal.events.whose%28%7B%0A%20%20_and%3A%20%5B%0A%20%20%20%20%7BstartDate%3A%20%7B_greaterThan%3A%20now%7D%7D%2C%0A%20%20%20%20%7Bsummary%3A%20%7B_beginsWith%3A%20%22Example%20Event%22%7D%7D%0A%20%20%5D%0A%7D%29%0A%0Avar%20swEvents%20%3D%20swHomeEvents%28%29%0AswEvents%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    //htt<span class="hljs-symbol">ps:</span>//leancrew.com/all-this/
+    //<span class="hljs-built_in">If</span> <span class="hljs-string">"Example Event"</span> <span class="hljs-built_in">and</span> <span class="hljs-string">"Demo"</span> calendar do <span class="hljs-built_in">not</span> exist script fails
+
+    <span class="hljs-built_in">var</span> <span class="hljs-built_in">now</span> = new(<span class="hljs-built_in">Date</span>)
+
+    <span class="hljs-built_in">var</span> Calendar = Application(<span class="hljs-string">"Calendar"</span>)
+    <span class="hljs-built_in">var</span> homeCal = Calendar.calendars.whose({<span class="hljs-built_in">na</span><span class="hljs-symbol">me:</span> <span class="hljs-string">"Demo"</span>})[<span class="hljs-number">0</span>]
+
+    <span class="hljs-built_in">var</span> swHomeEvents = homeCal.events.whose({
+      _a<span class="hljs-symbol">nd:</span> [
+        {startDa<span class="hljs-symbol">te:</span> {_greaterTh<span class="hljs-symbol">an:</span> <span class="hljs-built_in">now</span>}},
+        {summa<span class="hljs-symbol">ry:</span> {_beginsWi<span class="hljs-symbol">th:</span> <span class="hljs-string">"Example Event"</span>}}
+      ]
+    })
+
+    <span class="hljs-built_in">var</span> swEvents = swHomeEvents()
+    swEvents;
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-read-event-information"></a>
+    <h4> Calendar Read event information</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//Requires%20%22Demo%22%20calendar%20with%20events%0A%0A//%20Working%20with%20Application%20Calendar%0Avar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0A%0A%0A//%20Use%20specific%20calendar%20matching%20name%0Avar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22Demo%22%7D%29%0A%0A%0A//Use%20the%20first%20calendar%20that%20matches%20the%20name%0Avar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%28%29%0A%0A%0A//%20Gets%20information%20for%20the%20last%20created%20element%20in%20calendar%0Avar%20eventinfo%20%3D%20projectCalendar.events.last%28%29%0A%0Aeventinfo.properties%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    //Requires "Demo" calendar with events
+
+    // Working with Application Calendar
+    var Calendar = Application("Calendar")
+
+
+    // <span class="hljs-keyword">Use</span> specific calendar matching <span class="hljs-keyword">name</span>
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({<span class="hljs-keyword">name</span>: <span class="hljs-string">"Demo"</span>})
+
+
+    //<span class="hljs-keyword">Use</span> the <span class="hljs-keyword">first</span> calendar that matches the <span class="hljs-keyword">name</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]()
+
+
+    // Gets information <span class="hljs-keyword">for</span> the <span class="hljs-keyword">last</span> created <span class="hljs-keyword">element</span> <span class="hljs-keyword">in</span> calendar
+    <span class="hljs-keyword">var</span> eventinfo = projectCalendar.events.last()
+
+    eventinfo.properties();
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-show-an-event"></a>
+    <h4> Calendar Show an Event</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//Shows%20Example%20Event%20in%20Calendar%20Demo.%20%0A//If%20%22Example%20Event%22%20and%20%22Demo%22%20calendar%20do%20not%20exist%20script%20fails%0A%0Avar%20Calendar%20%3D%20Application%28%22Calendar%22%29%0D%0A%0A//Returns%20all%20Calendars%20with%20matching%20name%0Dvar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20%22Demo%22%7D%29%0A%0A//Only%20use%20the%20first%20one%20that%20matches%20name%0Dvar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%20%0A%0A//Same%20logic%20as%20with%20Calendar%2C%20returns%20all%2C%20you%20only%20want%20the%20first%20one.%20%0Dvar%20events%20%3D%20projectCalendar.events.whose%28%7Bsummary%3A%20%22Example%20Event%22%7D%29%0Dvar%20event%20%3D%20events%5B0%5D%0Devent.show%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    //Shows Example Event in Calendar Demo.
+    //If "Example Event" and "Demo" calendar <span class="hljs-keyword">do</span> <span class="hljs-keyword">not</span> exist script fails
+
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">"Calendar"</span>)
+
+    //<span class="hljs-keyword">Returns</span> all Calendars <span class="hljs-keyword">with</span> matching <span class="hljs-keyword">name</span>
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({<span class="hljs-keyword">name</span>: <span class="hljs-string">"Demo"</span>})
+
+    //<span class="hljs-keyword">Only</span> <span class="hljs-keyword">use</span> the <span class="hljs-keyword">first</span> one that matches <span class="hljs-keyword">name</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]
+
+    //Same logic <span class="hljs-keyword">as</span> <span class="hljs-keyword">with</span> Calendar, <span class="hljs-keyword">returns</span> all, you <span class="hljs-keyword">only</span> want the <span class="hljs-keyword">first</span> one.
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">events</span> = projectCalendar.events.whose({summary: <span class="hljs-string">"Example Event"</span>})
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">event</span> = <span class="hljs-keyword">events</span>[<span class="hljs-number">0</span>]
+    event.show();
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-sort-events-by-date"></a>
+    <h4> Calendar Sort events by Date</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//Set%20Calendar%20to%20be%20the%20Application%20Calendar%0Dvar%20Calendar%20%3D%20Application%28%27Calendar%27%29%20%0D%0D//Set%20name%20of%20Calendar%20you%20are%20using%0Dvar%20calendarUsed%20%3D%20%22Demo%22%0D%0D//use%20Demo%20as%20the%20used%20Calendar%20by%20searching%20for%20it.%0Dvar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20calendarUsed%7D%29%0D//Use%20the%20first%20result%20that%20matches%20name%20search%0Dvar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%0D%0D%0A%0Aevents%20%3D%20projectCalendar.events%28%29%0A%0A//%20This%20sorts%20all%20events%20so%20it%20may%20take%20a%20while%0Aevents.sort%28function%20%28a%2Cb%29%7B%0A%09if%20%28a.startDate%28%29%20%3E%20b.startDate%28%29%29%20return%20-1%3B%0A%09if%20%28a.startDate%28%29%20%3C%20b.startDate%28%29%29%20return%201%3B%0A%09return%200%0A%09%7D%29%3B%0A%0A%0A//%20Script%20Editor%20only%20outputs%20one%20value%2C%20so%20an%20array%20to%20show%20that%20start%20dates%20are%20in%20order%0Avar%20holderArray%3D%20%5B%5D%0A%0Afor%20%28let%20i%3D0%3B%20i%20%3C%20events.length%3B%20i%2B%2B%29%7B%0A%09holderArray.push%28events%5Bi%5D%29%3B%0A%09%7D%0A%0A//%20Most%20Recent%20event%20is%20now%20first%20as%20sort%20is%20decending%0A%0Aevents%5B0%5D.startDate%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">//Set Calendar to be the Application Calendar</span>
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">'Calendar'</span>)
+
+    <span class="hljs-comment">//Set name of Calendar you are using</span>
+    <span class="hljs-keyword">var</span> calendarUsed = <span class="hljs-string">"Demo"</span>
+
+    <span class="hljs-comment">//use Demo as the used Calendar by searching for it.</span>
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({<span class="hljs-attr">name</span>: calendarUsed})
+    <span class="hljs-comment">//Use the first result that matches name search</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>]
+
+
+    events = projectCalendar.events()
+
+    <span class="hljs-comment">// This sorts all events so it may take a while</span>
+    events.sort(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a,b</span>)</span>{
+        <span class="hljs-keyword">if</span> (a.startDate() &gt; b.startDate()) <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">if</span> (a.startDate() &lt; b.startDate()) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        });
+
+
+    <span class="hljs-comment">// Script Editor only outputs one value, so an array to show that start dates are in order</span>
+    <span class="hljs-keyword">var</span> holderArray= []
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i=<span class="hljs-number">0</span>; i &lt; events.length; i++){
+        holderArray.push(events[i]);
+        }
+
+    <span class="hljs-comment">// Most Recent event is now first as sort is decending</span>
+
+    events[<span class="hljs-number">0</span>].startDate();
+  </code></pre>
+  <hr>
+  <p>  <a name="calendar-update-event-property-(create-new-event-with-new-property)"></a>
+    <h4> Calendar Update event property (create new event with new property)</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Unlike%20elements%20which%20can%20be%20added%2C%20properties%20cannot%20be%20changed%2C%20but%20new%20events%20must%20be%20created%20with%20new%20property%20and%20the%20previous%20event%20deleted.%20%0A//%20is%20this%20correct%3F%20https%3A//stackoverflow.com/questions/9454863/updating-javascript-object-property/48209957%0A//%20This%20script%20creates%20an%20example%20event%20and%20then%20based%20on%20that%20event%20creates%20a%20new%20event%20with%20a%20new%20description%20property.%20%0A%0A//%20Add%20standard%20library%20for%20dialog%20boxes%0Avar%20app%20%3D%20Application.currentApplication%28%29%3B%0Aapp.includeStandardAdditions%20%3D%20true%3B%0A%0A//Set%20Calendar%20to%20be%20the%20Application%20Calendar%0Avar%20Calendar%20%3D%20Application%28%27Calendar%27%29%3B%0A%0A//Set%20name%20of%20Calendar%20you%20are%20using%0Avar%20calendarUsed%20%3D%20%22Demo%22%3B%0A%0A//use%20Demo%20as%20the%20used%20Calendar%20by%20searching%20for%20it.%0Avar%20projectCalendars%20%3D%20Calendar.calendars.whose%28%7Bname%3A%20calendarUsed%7D%29%3B%0A//Use%20the%20first%20result%20that%20matches%20name%20search%0Avar%20projectCalendar%20%3D%20projectCalendars%5B0%5D%3B%0A%0A//You%20need%20the%20time%20now%20as%20an%20object%0Avar%20timeNow%20%3D%20new%20Date%28%29%3B%0A%0A//inAnHour%20as%20well%0Avar%20inAnHour%20%3D%20new%20Date%28%29%3B%0A%0A//Create%20Date%20object%20one%20hour%20ago%20for%20search%20criteria%20%0AinAnHour.setHours%28timeNow.getHours%28%29%2B1%29%3B%0A%0A%0A//Create%20new%20event%20with%20values%20from%20pervious%20event%20and%20end%20time%20of%20timeNow%0AnewEvent%3DCalendar.Event%28%7Bsummary%3A%20%22Demo%20Event%22%2C%20startDate%3A%20timeNow%2C%20endDate%3A%20inAnHour%7D%29%3B%0A%0A//%20Push%20the%20event%20to%20the%20calendar%0AprojectCalendar.events.push%28newEvent%29%3B%0A%0A//%20Get%20ID%20of%20last%20created%20event%20to%20be%20used%20to%20delete%20the%20event%20without%20description%0Avar%20eventWithoutDescriptionId%20%3D%20projectCalendar.events.last.id%28%29%0A%0A%0Avar%20descriptionText%20%3D%20%22This%20event%20was%20created%20with%20a%20description%22%3B%0A%0A//Create%20new%20event%20with%20same%20valuses%20as%20it%20replaces%20and%20new%20descritption%0AeventWithDescription%3DCalendar.Event%28%7Bsummary%3A%20%22Demo%20Event%22%20%2C%20startDate%3A%20timeNow%2C%20endDate%3A%20inAnHour%2C%20description%3A%20descriptionText%7D%29%0A%0A//%20push%20the%20event%20to%20the%20calendar%0AprojectCalendar.events.push%28eventWithDescription%29%0A%0A//Delete%20the%20event%20without%20description.%0Atry%20%7B%0ACalendar.delete%28projectCalendar.events.byId%28eventWithoutDescriptionId%29%29%0A%7D%0Acatch%28err%29%7B%0A%09var%20errorMsg%20%3D%20app.displayDialog%28%22Error%22%2C%20%7B%0A%09buttons%3A%20%5B%22Cancel%22%2C%20%22Continue%22%5D%2C%0A%09defaultButton%3A%20%22Continue%22%0A%09%7D%29%0A%7D%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    // Unlike elements which can be added, properties cannot be changed, but new events must be created with new property and the previous event deleted.
+    // is this correct? https://stackoverflow.com/questions/9454863/updating-javascript-object-property/48209957
+    // This script creates an example event and then based on that event creates a new event with a new description property.
+
+    // Add standard library for dialog boxes
+    var app = Application.currentApplication();
+    app.includeStandardAdditions = true;
+
+    //<span class="hljs-keyword">Set</span> Calendar <span class="hljs-keyword">to</span> be the Application Calendar
+    <span class="hljs-keyword">var</span> Calendar = Application(<span class="hljs-string">'Calendar'</span>);
+
+    //<span class="hljs-keyword">Set</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">of</span> Calendar you <span class="hljs-keyword">are</span> <span class="hljs-keyword">using</span>
+    <span class="hljs-keyword">var</span> calendarUsed = <span class="hljs-string">"Demo"</span>;
+
+    //<span class="hljs-keyword">use</span> Demo <span class="hljs-keyword">as</span> the used Calendar <span class="hljs-keyword">by</span> searching <span class="hljs-keyword">for</span> it.
+    <span class="hljs-keyword">var</span> projectCalendars = Calendar.calendars.whose({<span class="hljs-keyword">name</span>: calendarUsed});
+    //<span class="hljs-keyword">Use</span> the <span class="hljs-keyword">first</span> <span class="hljs-keyword">result</span> that matches <span class="hljs-keyword">name</span> <span class="hljs-keyword">search</span>
+    <span class="hljs-keyword">var</span> projectCalendar = projectCalendars[<span class="hljs-number">0</span>];
+
+    //You need the time now as an object
+    var timeNow = new Date();
+
+    //inAnHour as well
+    var inAnHour = new Date();
+
+    //<span class="hljs-keyword">Create</span> <span class="hljs-built_in">Date</span> <span class="hljs-keyword">object</span> one <span class="hljs-keyword">hour</span> ago <span class="hljs-keyword">for</span> <span class="hljs-keyword">search</span> criteria
+    inAnHour.setHours(timeNow.getHours()+<span class="hljs-number">1</span>);
+
+
+    //<span class="hljs-keyword">Create</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">event</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">values</span> <span class="hljs-keyword">from</span> pervious <span class="hljs-keyword">event</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">end</span> <span class="hljs-keyword">time</span> <span class="hljs-keyword">of</span> timeNow
+    newEvent=Calendar.Event({summary: <span class="hljs-string">"Demo Event"</span>, startDate: timeNow, endDate: inAnHour});
+
+    // Push the event to the calendar
+    projectCalendar.events.push(newEvent);
+
+    // Get ID of last created event to be used to <span class="hljs-keyword">delete</span> the <span class="hljs-keyword">event</span> <span class="hljs-keyword">without</span> description
+    <span class="hljs-keyword">var</span> eventWithoutDescriptionId = projectCalendar.events.last.id()
+
+
+    <span class="hljs-keyword">var</span> descriptionText = <span class="hljs-string">"This event was created with a description"</span>;
+
+    //<span class="hljs-keyword">Create</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">event</span> <span class="hljs-keyword">with</span> same valuses <span class="hljs-keyword">as</span> it replaces <span class="hljs-keyword">and</span> <span class="hljs-keyword">new</span> descritption
+    eventWithDescription=Calendar.Event({summary: <span class="hljs-string">"Demo Event"</span> , startDate: timeNow, endDate: inAnHour, description: descriptionText})
+
+    // push the <span class="hljs-keyword">event</span> <span class="hljs-keyword">to</span> the calendar
+    projectCalendar.events.push(eventWithDescription)
+
+    //<span class="hljs-keyword">Delete</span> the <span class="hljs-keyword">event</span> <span class="hljs-keyword">without</span> description.
+    try {
+    Calendar.delete(projectCalendar.events.byId(eventWithoutDescriptionId))
+    }
+    catch(err){
+        <span class="hljs-keyword">var</span> errorMsg = app.displayDialog(<span class="hljs-string">"Error"</span>, {
+        buttons: [<span class="hljs-string">"Cancel"</span>, <span class="hljs-string">"Continue"</span>],
+        defaultButton: <span class="hljs-string">"Continue"</span>
+        })
+    };
+  </code></pre>
+  <hr>
+  <p>  <a name="finder-full-path-to-this-file"></a>
+    <h4> Finder Full path to this file</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Provids%20the%20full%20path%20to%20current%20files%20as%20a%20Path%20object%20use%20toString%28%29%20if%20you%20want%20a%20string%0A%0Avar%20app%20%3D%20Application.currentApplication%28%29%3B%0Aapp.includeStandardAdditions%20%3D%20true%3B%0A%0A//%0AthePath%20%3D%20app.pathTo%28this%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">// Provids the full path to current files as a Path object use toString() if you want a string</span>
+
+    <span class="hljs-keyword">var</span> app = Application.currentApplication();
+    app.includeStandardAdditions = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-comment">//</span>
+    thePath = app.pathTo(<span class="hljs-keyword">this</span>);
+  </code></pre>
+  <hr>
+  <p>  <a name="finder-item-properties"></a>
+    <h4> Finder Item properties</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Looking%20at%20the%20properties%20of%20diskItems%0A%0Avar%20Finder%20%3D%20Application%28%22Finder%22%29%3B%0Avar%20SystemEvents%20%3D%20Application%28%22System%20Events%22%29%3B%0A%0Avar%20sourcePathStr%20%3D%20%22~/Demo/sampleDir%22%0Avar%20expandedSourcePathStr%20%3D%20%24%28sourcePathStr%29.stringByStandardizingPath.js%0A//Result%3A%20%22/Users/adkj/Demo/sampleDir%22%0A%0A//%20function%20sourceFolder%0Avar%20sourceFolder%20%3D%20SystemEvents.aliases.byName%28expandedSourcePathStr%29%3B%0A//Result%3A%20Application%28%22System%20Events%22%29.aliases.byName%28%22/Users/adkj/Demo/sampleDir%22%29%0A%0A//function%20container%0Avar%20container%20%3D%20sourceFolder.container%28%29%3B%0A//Result%3A%20Application%28%22System%20Events%22%29.folders.byName%28%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%22%29%0A%0A//%20String%20containerPath%0Avar%20containerPath%20%3D%20container.path%28%29%3B%0A//Result%3A%20%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%22%0A//%20Create%20an%20array%20of%20items%20functions%20to%20be%20processed%0Avar%20items%20%3D%20SystemEvents.aliases.byName%28sourcePathStr%29.diskItems%3B%0Aitems%5B1%5D%28%29%0A//Result%3A%20Path%28%22/Users/adkj/Demo/sampleDir/samplefile.rtf%22%29%0A%0Aitems%5B1%5D.class%28%29%0A//Result%3A%20%22file%22%0A%0Aitems%5B1%5D.name%28%29%0A//Result%3A%20%22samplefile.rtf%22%0A%0Aitems%5B0%5D.path%28%29%0A//Result%3A%20%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%3AsampleDir%3A.DS_Store%22%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-regexp">//</span> Looking at the properties of diskItems
+
+    var Finder = Application(<span class="hljs-string">"Finder"</span>);
+    var SystemEvents = Application(<span class="hljs-string">"System Events"</span>);
+
+    var sourcePathStr = <span class="hljs-string">"~/Demo/sampleDir"</span>
+    var expandedSourcePathStr = $(sourcePathStr).stringByStandardizingPath.js
+    <span class="hljs-regexp">//</span>Result: <span class="hljs-string">"/Users/adkj/Demo/sampleDir"</span>
+
+    <span class="hljs-regexp">//</span> <span class="hljs-keyword">function</span> sourceFolder
+    var sourceFolder = SystemEvents.aliases.byName(expandedSourcePathStr);
+    <span class="hljs-regexp">//</span>Result: Application(<span class="hljs-string">"System Events"</span>).aliases.byName(<span class="hljs-string">"/Users/adkj/Demo/sampleDir"</span>)
+
+    <span class="hljs-regexp">//</span><span class="hljs-keyword">function</span> container
+    var container = sourceFolder.container();
+    <span class="hljs-regexp">//</span>Result: Application(<span class="hljs-string">"System Events"</span>).folders.byName(<span class="hljs-string">"Macintosh HD:Users:adkj:Demo"</span>)
+
+    <span class="hljs-regexp">//</span> String containerPath
+    var containerPath = container.path();
+    <span class="hljs-regexp">//</span>Result: <span class="hljs-string">"Macintosh HD:Users:adkj:Demo"</span>
+    <span class="hljs-regexp">//</span> Create an array of items functions to be processed
+    var items = SystemEvents.aliases.byName(sourcePathStr).diskItems;
+    items[<span class="hljs-number">1</span>]()
+    <span class="hljs-regexp">//</span>Result: Path(<span class="hljs-string">"/Users/adkj/Demo/sampleDir/samplefile.rtf"</span>)
+
+    items[<span class="hljs-number">1</span>].class()
+    <span class="hljs-regexp">//</span>Result: <span class="hljs-string">"file"</span>
+
+    items[<span class="hljs-number">1</span>].name()
+    <span class="hljs-regexp">//</span>Result: <span class="hljs-string">"samplefile.rtf"</span>
+
+    items[<span class="hljs-number">0</span>].path()
+    <span class="hljs-regexp">//</span>Result: <span class="hljs-string">"Macintosh HD:Users:adkj:Demo:sampleDir:.DS_Store"</span>;
+  </code></pre>
+  <hr>
+  <p>  <a name="finder-moving-and-item-properties"></a>
+    <h4> Finder Moving and item properties</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0Avar%20app%20%3D%20Application.currentApplication%28%29%3B%0Aapp.includeStandardAdditions%20%3D%20true%3B%0A%0Avar%20Finder%20%3D%20Application%28%22Finder%22%29%3B%0Avar%20SystemEvents%20%3D%20Application%28%22System%20Events%22%29%3B%0A%0A//%20Ask%20a%20folder%20to%20process%0A%0Avar%20sourcePathStr%20%3D%20%22~/Demo/sampleDir%22%0A%0A//Expands%20~%20to%20be%20full%20user%20path%0Avar%20expandedSourcePathStr%20%3D%20%24%28sourcePathStr%29.stringByStandardizingPath.js%0A%0A//%20Allows%20for%20running%20the%20script%20multiple%20times%0Avar%20duplicateAvoider%20%3D%20Date.now%28%29.toString%28%29%0A%0A%0A//%20function%20sourceFolder%0Avar%20sourceFolder%20%3D%20SystemEvents.aliases.byName%28expandedSourcePathStr%29%3B%0A//Result%3A%20Application%28%22System%20Events%22%29.aliases.byName%28%22/Users/adkj/Demo/sampleDir%22%29%0A%0A//%20Create%20the%20destination%20folder%0A%0A//function%20container%0Avar%20container%20%3D%20sourceFolder.container%28%29%3B%0A//Result%3A%20Application%28%22System%20Events%22%29.folders.byName%28%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%22%29%0A%0A//%20String%20containerPath%0Avar%20containerPath%20%3D%20container.path%28%29%3B%0A//Result%3A%20%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%22%0A%0A//%20.make%20is%20function/method%20from%20Standard%20Suite%0Avar%20destinationFolder%20%3D%20Finder.make%28%0A%09%7B%0A%20%09%09new%3A%20%22folder%22%2C%20%0A%09%09at%3A%20containerPath%2C%0A%09%09withProperties%3A%20%0A%09%09%7B%20%0A%09%09%09name%3A%20sourceFolder.name%28%29%20%2B%20%22%20-%20New%22%0A%20%0A%09%09%7D%0A%09%7D%0A%29%3B%0A%0A//%20Create%20an%20array%20of%20items%20functions%20to%20be%20processed%0Avar%20items%20%3D%20SystemEvents.aliases.byName%28sourcePathStr%29.diskItems%3B%0Aitems%5B0%5D%28%29%0A//Result%3A%20Path%28%22/Users/adkj/Demo/sampleDir/samplefile.rtf%22%29%0A%0Aitems%5B0%5D.class%28%29%0A//Result%3A%20%22file%22%0A%0Aitems%5B0%5D.name%28%29%0A//Result%3A%20%22samplefile.rtf%22%0A%0Aitems%5B1%5D.path%28%29%0A//Result%3A%20%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%3AsampleDir%3A.DS_Store%22%0A%0A%0A//Finder.move%28%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%3AsampleDir%3Asamplefile.rtf%22%2C%20%7B%20to%3A%20%22Macintosh%20HD%3AUsers%3Aadkj%3ADemo%3AsampleDir%20-%20New%22%20%7D%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">app</span> = Application.currentApplication();
+    <span class="hljs-keyword">app</span>.includeStandardAdditions = true;
+
+    <span class="hljs-keyword">var</span> Finder = Application(<span class="hljs-string">"Finder"</span>);
+    <span class="hljs-keyword">var</span> SystemEvents = Application(<span class="hljs-string">"System Events"</span>);
+
+    <span class="hljs-comment">// Ask a folder to process</span>
+
+    <span class="hljs-keyword">var</span> sourcePathStr = <span class="hljs-string">"~/Demo/sampleDir"</span>
+
+    <span class="hljs-comment">//Expands ~ to be full user path</span>
+    <span class="hljs-keyword">var</span> expandedSourcePathStr = $(sourcePathStr).stringByStandardizingPath.js
+
+    <span class="hljs-comment">// Allows for running the script multiple times</span>
+    <span class="hljs-keyword">var</span> duplicateAvoider = Date.now().<span class="hljs-keyword">toString</span>()
+
+
+    <span class="hljs-comment">// function sourceFolder</span>
+    <span class="hljs-keyword">var</span> sourceFolder = SystemEvents.aliases.byName(expandedSourcePathStr);
+    <span class="hljs-comment">//Result: Application("System Events").aliases.byName("/Users/adkj/Demo/sampleDir")</span>
+
+    <span class="hljs-comment">// Create the destination folder</span>
+
+    <span class="hljs-comment">//function container</span>
+    <span class="hljs-keyword">var</span> container = sourceFolder.container();
+    <span class="hljs-comment">//Result: Application("System Events").folders.byName("Macintosh HD:Users:adkj:Demo")</span>
+
+    <span class="hljs-comment">// String containerPath</span>
+    <span class="hljs-keyword">var</span> containerPath = container.path();
+    <span class="hljs-comment">//Result: "Macintosh HD:Users:adkj:Demo"</span>
+
+    <span class="hljs-comment">// .make is function/method from Standard Suite</span>
+    <span class="hljs-keyword">var</span> destinationFolder = Finder.make(
+        {
+             new: <span class="hljs-string">"folder"</span>,
+            at: containerPath,
+            withProperties:
+            {
+                name: sourceFolder.name() + <span class="hljs-string">" - New"</span>
+
+            }
+        }
+    );
+
+    <span class="hljs-comment">// Create an array of items functions to be processed</span>
+    <span class="hljs-keyword">var</span> items = SystemEvents.aliases.byName(sourcePathStr).diskItems;
+    items[0]()
+    <span class="hljs-comment">//Result: Path("/Users/adkj/Demo/sampleDir/samplefile.rtf")</span>
+
+    items[0].<span class="hljs-keyword">class</span>()
+    <span class="hljs-comment">//Result: "file"</span>
+
+    items[0].name()
+    <span class="hljs-comment">//Result: "samplefile.rtf"</span>
+
+    items[1].path()
+    <span class="hljs-comment">//Result: "Macintosh HD:Users:adkj:Demo:sampleDir:.DS_Store"</span>
+
+
+    <span class="hljs-comment">//Finder.move("Macintosh HD:Users:adkj:Demo:sampleDir:samplefile.rtf", { to: "Macintosh HD:Users:adkj:Demo:sampleDir - New" });</span>
+  </code></pre>
+  <hr>
+  <p>  <a name="finder-open-window"></a>
+    <h4> Finder Open Window</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Script%20to%20Open%20a%20Finder%20Window%20with%20a%20folder%20and%20bring%20to%20the%20front%0A//%20Requires%20~/Demo%0A%0Avar%20Finder%20%3D%20Application%28%27Finder%27%29%3B%0A%0Avar%20demoDir%20%3D%20%22~/Demo%22%20%0A%0A//Resolves%20the%20~%20to%20be%20the%20home%20directory%20path%0D%0Avar%20fullDemoDir%20%3D%20%24%28demoDir%29.stringByStandardizingPath.js%0A%0A//Opens%20Finder%20window%20containing%20~/Demo%0A//%20Brings%20Path%20object%20into%20view%0AFinder.reveal%28Path%28fullDemoDir%29%29%3B%0A%0A//Brings%20finder%20to%20front%0AFinder.activate%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Script to Open a Finder Window with a folder and bring to the front</span>
+    <span class="hljs-comment">// Requires ~/Demo</span>
+
+    <span class="hljs-keyword">var</span> Finder = Application(<span class="hljs-string">'Finder'</span>);
+
+    <span class="hljs-keyword">var</span> demoDir = <span class="hljs-string">"~/Demo"</span>
+
+    <span class="hljs-comment">//Resolves the ~ to be the home directory path</span>
+    <span class="hljs-keyword">var</span> fullDemoDir = $(demoDir).stringByStandardizingPath.js
+
+    <span class="hljs-comment">//Opens Finder window containing ~/Demo</span>
+    <span class="hljs-comment">// Brings Path object into view</span>
+    Finder.reveal(Path(fullDemoDir));
+
+    <span class="hljs-comment">//Brings finder to front</span>
+    Finder.activate();
+  </code></pre>
+  <hr>
+  <p>  <a name="finder-make-folder"></a>
+    <h4> Finder make folder</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Make%20a%20new%20directory%0Avar%20app%20%3D%20Application.currentApplication%28%29%3B%0Aapp.includeStandardAdditions%20%3D%20true%3B%0A%0Avar%20Finder%20%3D%20Application%28%22Finder%22%29%3B%0A%0AFinder.make%28%0A%09%7B%0A%20%09%09new%3A%20%22folder%22%2C%20%0A%09%09//Requires%20password%20to%20create%20folder%20here%0A%09%09at%3A%20%22Macintosh%20HD%3AUsers%22%2C%0A%09%09withProperties%3A%20%0A%09%09%7B%20%0A%09%09%09name%3A%20%22Made%20by%20JXA%22%0A%20%0A%09%09%7D%0A%09%7D%0A%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">// Make a new directory</span>
+    <span class="hljs-keyword">var</span> app = Application.currentApplication();
+    app.includeStandardAdditions = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">var</span> Finder = Application(<span class="hljs-string">"Finder"</span>);
+
+    Finder.<span class="hljs-built_in">make</span>(
+        {
+             <span class="hljs-built_in">new</span>: <span class="hljs-string">"folder"</span>,
+            <span class="hljs-comment">//Requires password to create folder here</span>
+            at: <span class="hljs-string">"Macintosh HD:Users"</span>,
+            withProperties:
+            {
+                name: <span class="hljs-string">"Made by JXA"</span>
+
+            }
+        }
+    );
+  </code></pre>
+  <hr>
+  <p>  <a name="finder-moving-files"></a>
+    <h4> Finder moving files</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Move%20files%20from%20one%20directory%20to%20another%0A//%20based%20on%20https%3A//stackoverflow.com/questions/31710494/moving-created-files-with-jxa%0A%0A%27use%20strict%27%3B%0A%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%20%0A%0Avar%20Finder%20%3D%20Application%28%27Finder%27%29%3B%20%20%0A%0A//%20Create%20a%20Path%20object%0Avar%20sourceFile%20%3D%20Path%28%22/User/adkj/Demo/sample.rtf%22%29%3B%0A%0Avar%20destintationFile%20%3D%20%22/Users/adkj/Demo2/sample%22%20%3B%0A%0Avar%20destFolder%3DPath%28%22/Users/adkj/Demo2%22%29%3B%0A%0Avar%20strPathSource%20%3D%20%24%28sourceFile%29.toString%28%29%3B%0A%0Avar%20strPathDest%20%3D%20%24%28destFolder%29.toString%28%29%3B%0A%0AFinder.move%28strPathSource%2C%20%7B%20to%3AstrPathDest%2C%20replacing%3A%20true%7D%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Move files from one directory to another</span>
+    <span class="hljs-comment">// based on https://stackoverflow.com/questions/31710494/moving-created-files-with-jxa</span>
+  <span class="hljs-meta">
+    'use strict'</span>;
+
+    <span class="hljs-keyword">var</span> app = Application.currentApplication()
+    app.includeStandardAdditions = <span class="hljs-literal">true</span>
+
+    <span class="hljs-keyword">var</span> Finder = Application(<span class="hljs-string">'Finder'</span>);
+
+    <span class="hljs-comment">// Create a Path object</span>
+    <span class="hljs-keyword">var</span> sourceFile = Path(<span class="hljs-string">"/User/adkj/Demo/sample.rtf"</span>);
+
+    <span class="hljs-keyword">var</span> destintationFile = <span class="hljs-string">"/Users/adkj/Demo2/sample"</span> ;
+
+    <span class="hljs-keyword">var</span> destFolder=Path(<span class="hljs-string">"/Users/adkj/Demo2"</span>);
+
+    <span class="hljs-keyword">var</span> strPathSource = $(sourceFile).toString();
+
+    <span class="hljs-keyword">var</span> strPathDest = $(destFolder).toString();
+
+    Finder.move(strPathSource, { <span class="hljs-attr">to</span>:strPathDest, <span class="hljs-attr">replacing</span>: <span class="hljs-literal">true</span>});
+  </code></pre>
+  <hr>
+  <p>  <a name="investigate-failed-calendar-identifier"></a>
+    <h4> Investigate Failed Calendar identifier</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//.calendaridentifier%28%29%0Avar%20calTaskBox%20%3D%20Application%28%27Calendar%27%29.calendars%5B9%5D%0AcalTaskBox.calendarIdentifier%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">//.calendaridentifier()</span>
+    <span class="hljs-keyword">var</span> calTaskBox = Application(<span class="hljs-string">'Calendar'</span>).calendars[<span class="hljs-number">9</span>]
+    calTaskBox.calendarIdentifier();
+  </code></pre>
+  <hr>
+  <p>  <a name="js-array-sort-by-date"></a>
+    <h4> JS Array Sort by Date</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Example%20of%20sorting%20by%20the%20Date%20Object%0A%0Aarray%20%3D%20%5Bnew%20Date%28%29%2C%20new%20Date%28100001%29%2C%20new%20Date%28100100800000%29%2C%20new%20Date%281989%2C%209%2C%2011%2C%208%2C%2046%2C%2000%2C%200%29%5D%0A%0Avar%20sortedArray%20%3D%20array.sort%28%28a%2C%20b%29%20%3D%3E%20a.valueOf%28%29%20-%20b.valueOf%28%29%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">// Example of sorting by the Date Object</span>
+
+    array = [<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">100001</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">100100800000</span>), <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">1989</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">8</span>, <span class="hljs-number">46</span>, <span class="hljs-number">00</span>, <span class="hljs-number">0</span>)]
+
+    <span class="hljs-keyword">var</span> sortedArray = array.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a.valueOf() - b.valueOf());
+  </code></pre>
+  <hr>
+  <p>  <a name="js-exploration"></a>
+    <h4> JS exploration </h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//array%20of%20object%27s%20enumerable%20string%20properties%0AObject.keys%28Application%28%27Calendar%27%29.calendars%5B12%5D.events%29%0A//Result%20%3A%20%5B%220%22%2C%20%221%22%2C%20%222%22%2C%20%223%22%2C%20%224%22%2C%20%225%22%5D%0A%0A%0A//Get%20name%20of%20calendar%2012%0AApplication%28%27Calendar%27%29.calendars%5B12%5D.name%28%29%0A//Result%3A%20%22Demo%22%0A%0A//Summary%20is%20the%20name%20of%20the%20event%0AApplication%28%27Calendar%27%29.calendars%5B12%5D.events.summary%28%29%0A//Result%3A%20%5B%22Demo%20Project%201%20-%20makeing%20video%22%2C%20%22Cheese%20Making%20-%20Researching%20soy%20cheddar%22%2C%20%22Blog%20Apple%20launchd%22%2C%20%22Blog%20research%20%22%2C%20%22Automating%20TimeMachine%20Backups%22%2C%20%22Chess%22%5D%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    //<span class="hljs-keyword">array</span> <span class="hljs-keyword">of</span> object<span class="hljs-symbol">'s</span> enumerable <span class="hljs-built_in">string</span> properties
+    Object.keys(Application(<span class="hljs-symbol">'Calendar</span>').calendars[<span class="hljs-number">12</span>].events)
+    //Result : [<span class="hljs-string">"0"</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span>, <span class="hljs-string">"4"</span>, <span class="hljs-string">"5"</span>]
+
+
+    //Get name <span class="hljs-keyword">of</span> calendar <span class="hljs-number">12</span>
+    Application(<span class="hljs-symbol">'Calendar</span>').calendars[<span class="hljs-number">12</span>].name()
+    //Result: <span class="hljs-string">"Demo"</span>
+
+    //Summary <span class="hljs-keyword">is</span> the name <span class="hljs-keyword">of</span> the event
+    Application(<span class="hljs-symbol">'Calendar</span>').calendars[<span class="hljs-number">12</span>].events.summary()
+    //Result: [<span class="hljs-string">"Demo Project 1 - makeing video"</span>, <span class="hljs-string">"Cheese Making - Researching soy cheddar"</span>, <span class="hljs-string">"Blog Apple launchd"</span>, <span class="hljs-string">"Blog research "</span>, <span class="hljs-string">"Automating TimeMachine Backups"</span>, <span class="hljs-string">"Chess"</span>];
+  </code></pre>
+  <hr>
+  <p>  <a name="jxa-applescript-in-jxa"></a>
+    <h4> JXA AppleScript in JXA</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%27use%20strict%27%3B%0A%0A%20%20%20%20//%20evalAS%20%3A%3A%20String%20-%3E%20IO%20String%0A%20%20%20%20const%20evalAS%20%3D%20s%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20const%0A%20%20%20%20%20%20%20%20%20%20%20%20a%20%3D%20Application.currentApplication%28%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20sa%20%3D%20%28a.includeStandardAdditions%20%3D%20true%2C%20a%29%3B%0A%20%20%20%20%20%20%20%20return%20sa.doShellScript%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%5B%27osascript%20-l%20AppleScript%20%3C%3COSA_END%202%3E/dev/null%27%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20.concat%28%5Bs%5D%29%0A%20%20%20%20%20%20%20%20%20%20%20%20.concat%28%27OSA_END%27%29%0A%20%20%20%20%20%20%20%20%20%20%20%20.join%28%27%5Cn%27%29%0A%20%20%20%20%20%20%20%20%29%3B%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20return%20evalAS%28%27say%20%22hello%20world%22%27%29%3B%0A%0A%7D%29%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    (() =&gt; {
+        'use strict';
+
+        // evalAS :: String -&gt; IO String
+        const evalAS = s =&gt; {
+            const
+                a = Application.currentApplication(),
+                sa = (<span class="hljs-name">a.includeStandardAdditions</span> = <span class="hljs-literal">true</span>, a)<span class="hljs-comment">;</span>
+            return sa.doShellScript(
+                ['osascript -l AppleScript &lt;&lt;OSA_END <span class="hljs-number">2</span>&gt;/dev/null']
+                .concat([s])
+                .concat(<span class="hljs-name">'OSA_END'</span>)
+                .join(<span class="hljs-name">'</span>\n')
+            )<span class="hljs-comment">;</span>
+        }<span class="hljs-comment">;</span>
+
+        return evalAS(<span class="hljs-name">'say</span> <span class="hljs-string">"hello world"</span>')<span class="hljs-comment">;</span>
+
+    })()<span class="hljs-comment">;</span>
+  </code></pre>
+  <hr>
+  <p>  <a name="jxa-quit-application"></a>
+    <h4> JXA Quit Application</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Quit%20an%20open%20Application%0A%0Avar%20pages%20%3D%20Application%28%27Pages%27%29%3B%0Apages.quit%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">// Quit an open Application</span>
+
+    <span class="hljs-keyword">var</span> pages = Application(<span class="hljs-string">'Pages'</span>);
+    pages.quit();
+  </code></pre>
+  <hr>
+  <p>  <a name="mission-control-manage-desktops-and-open-apps"></a>
+    <h4> Mission Control Manage Desktops and open apps</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20I%20found%20this%20somewhere%2C%20reference%20it%20when%20found%20again%0A%0AApplication%28%22Mission%20Control%22%29.launch%28%29%0A%0Avar%20proc%20%3D%20Application%28%22System%20Events%22%29.processes%5B%27Dock%27%5D%0Avar%20group%20%3D%20proc.groups%5B0%5D.groups%5B0%5D.groups%5B1%5D%0A%0Avar%20bs%20%3D%20group.buttons.whose%28%7B%20description%3A%20%22add%20desktop%22%7D%29%0AApplication%28%22System%20Events%22%29.click%28bs%5B0%5D%29%0A%0Adelay%280.5%29%0Avar%20li%20%3D%20group.lists%5B0%5D%0AApplication%28%22System%20Events%22%29.click%28li.buttons%5Bli.buttons.length%20-%201%5D%29%0A%0Adelay%280.5%29%0AApplication%28%22Calendar%22%29.activate%28%29%3B%0AApplication%28%22Reminders%22%29.activate%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    // I found this somewhere, reference it when found again
+
+    Application(<span class="hljs-string">"Mission Control"</span>).launch()
+
+    <span class="hljs-built_in">var</span> proc = Application(<span class="hljs-string">"System Events"</span>).processes['Dock']
+    <span class="hljs-built_in">var</span> group = proc.groups[<span class="hljs-number">0</span>].groups[<span class="hljs-number">0</span>].groups[<span class="hljs-number">1</span>]
+
+    <span class="hljs-built_in">var</span> bs = group.buttons.whose({ description: <span class="hljs-string">"add desktop"</span>})
+    Application(<span class="hljs-string">"System Events"</span>).click(bs[<span class="hljs-number">0</span>])
+
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">0.5</span>)
+    <span class="hljs-built_in">var</span> <span class="hljs-built_in">li</span> = group.lists[<span class="hljs-number">0</span>]
+    Application(<span class="hljs-string">"System Events"</span>).click(<span class="hljs-built_in">li</span>.buttons[<span class="hljs-built_in">li</span>.buttons.<span class="hljs-built_in">length</span> - <span class="hljs-number">1</span>])
+
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">0.5</span>)
+    Application(<span class="hljs-string">"Calendar"</span>).<span class="hljs-built_in">activate</span>();
+    Application(<span class="hljs-string">"Reminders"</span>).<span class="hljs-built_in">activate</span>();
+  </code></pre>
+  <hr>
+  <p>  <a name="music-toggle-play-pause"></a>
+    <h4> Music Toggle Play Pause</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Toggle%20between%20Playing%20and%20pausing%20current%20song%0A%0AMusic%20%3D%20Application%28%27Music%27%29%3B%0A%0AMusic.playpause%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">// Toggle between Playing and pausing current song</span>
+
+    Music = Application(<span class="hljs-string">'Music'</span>);
+
+    Music.playpause();
+  </code></pre>
+  <hr>
+  <p>  <a name="objc-read-file-contents"></a>
+    <h4> ObjC Read file contents</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Maybe%20from%20JXA%20cookbook%0A%0A%28function%20%28%29%20%7B%0A%20%20%20%20%27use%20strict%27%3B%0A%0A%20%20%20%20//%20GENERIC%20FUNCTIONS%20------------------------------------------------------%0A%0A%20%20%20%20//%20doesFileExist%20%3A%3A%20String%20-%3E%20Bool%0A%20%20%20%20function%20doesFileExist%28strPath%29%20%7B%0A%20%20%20%20%20%20%20%20var%20error%20%3D%20%24%28%29%3B%0A%20%20%20%20%20%20%20%20return%20%24.NSFileManager.defaultManager%0A%20%20%20%20%20%20%20%20%20%20%20%20.attributesOfItemAtPathError%28%24%28strPath%29%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.stringByStandardizingPath%2C%20error%29%2C%20error.code%20%3D%3D%3D%20undefined%3B%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20//%20lines%20%3A%3A%20String%20-%3E%20%5BString%5D%0A%20%20%20%20function%20lines%28s%29%20%7B%0A%20%20%20%20%20%20%20%20return%20s.split%28/%5B%5Cr%5Cn%5D/%29%3B%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20//%20readFile%20%3A%3A%20FilePath%20-%3E%20maybe%20String%0A%20%20%20%20function%20readFile%28strPath%29%20%7B%0A%20%20%20%20%20%20%20%20var%20error%20%3D%20%24%28%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20str%20%3D%20ObjC.unwrap%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%24.NSString.stringWithContentsOfFileEncodingError%28%24%28strPath%29%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.stringByStandardizingPath%2C%20%24.NSUTF8StringEncoding%2C%20error%29%0A%20%20%20%20%20%20%20%20%20%20%20%20%29%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20blnValid%20%3D%20typeof%20error.code%20%21%3D%3D%20%27string%27%3B%0A%20%20%20%20%20%20%20%20return%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20nothing%3A%20%21blnValid%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20just%3A%20blnValid%20%3F%20str%20%3A%20undefined%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20error%3A%20blnValid%20%3F%20%27%27%20%3A%20error.code%0A%20%20%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20//%20show%20%3A%3A%20a%20-%3E%20String%0A%20%20%20%20function%20show%28x%29%20%7B%0A%20%20%20%20%20%20%20%20return%20JSON.stringify%28x%2C%20null%2C%202%29%3B%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20//%20TEST%20-------------------------------------------------------------------%0A%20%20%20%20var%20strPath%20%3D%20%27~/DeskTop/random.txt%27%3B%0A%0A%20%20%20%20return%20doesFileExist%28strPath%29%20%3F%20function%20%28%29%20%7B%0A%20%20%20%20%20%20%20%20var%20dctMaybe%20%3D%20readFile%28strPath%29%3B%0A%20%20%20%20%20%20%20%20return%20dctMaybe.nothing%20%3F%20dctMaybe.error%20%3A%20show%28lines%28dctMaybe.just%29%29%3B%0A%20%20%20%20%7D%28%29%20%3A%20%27File%20not%20found%3A%5Cn%5Ct%27%20%2B%20strPath%3B%0A%7D%29%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Maybe from JXA cookbook</span>
+
+    (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-meta">      'use strict'</span>;
+
+        <span class="hljs-comment">// GENERIC FUNCTIONS ------------------------------------------------------</span>
+
+        <span class="hljs-comment">// doesFileExist :: String -&gt; Bool</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doesFileExist</span>(<span class="hljs-params">strPath</span>) </span>{
+            <span class="hljs-keyword">var</span> error = $();
+            <span class="hljs-keyword">return</span> $.NSFileManager.defaultManager
+                .attributesOfItemAtPathError($(strPath)
+                    .stringByStandardizingPath, error), error.code === <span class="hljs-literal">undefined</span>;
+        };
+
+        <span class="hljs-comment">// lines :: String -&gt; [String]</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">lines</span>(<span class="hljs-params">s</span>) </span>{
+            <span class="hljs-keyword">return</span> s.split(<span class="hljs-regexp">/[\r\n]/</span>);
+        };
+
+        <span class="hljs-comment">// readFile :: FilePath -&gt; maybe String</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">readFile</span>(<span class="hljs-params">strPath</span>) </span>{
+            <span class="hljs-keyword">var</span> error = $(),
+                str = ObjC.unwrap(
+                    $.NSString.stringWithContentsOfFileEncodingError($(strPath)
+                        .stringByStandardizingPath, $.NSUTF8StringEncoding, error)
+                ),
+                blnValid = <span class="hljs-keyword">typeof</span> error.code !== <span class="hljs-string">'string'</span>;
+            <span class="hljs-keyword">return</span> {
+                <span class="hljs-attr">nothing</span>: !blnValid,
+                <span class="hljs-attr">just</span>: blnValid ? str : <span class="hljs-literal">undefined</span>,
+                <span class="hljs-attr">error</span>: blnValid ? <span class="hljs-string">''</span> : error.code
+            };
+        };
+
+        <span class="hljs-comment">// show :: a -&gt; String</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span>(<span class="hljs-params">x</span>) </span>{
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.stringify(x, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>);
+        };
+
+        <span class="hljs-comment">// TEST -------------------------------------------------------------------</span>
+        <span class="hljs-keyword">var</span> strPath = <span class="hljs-string">'~/DeskTop/random.txt'</span>;
+
+        <span class="hljs-keyword">return</span> doesFileExist(strPath) ? <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">var</span> dctMaybe = readFile(strPath);
+            <span class="hljs-keyword">return</span> dctMaybe.nothing ? dctMaybe.error : show(lines(dctMaybe.just));
+        }() : <span class="hljs-string">'File not found:\n\t'</span> + strPath;
+    })();
+  </code></pre>
+  <hr>
+  <p>  <a name="objc-read-folder-files"></a>
+    <h4> ObjC Read folder files</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Uses%20Objective%20C%20to%20read%20file%20names%20in%20a%20given%20folder.%20%0A//%20Copied%20from%20the%20JXA/Cookbook%20https%3A//github.com/JXA-Cookbook/JXA-Cookbook%0A%0A%20%20%20%20//%20listDirectory%20%3A%3A%20FilePath%20-%3E%20%5BFilePath%5D%0A%20%20%20%20function%20listDirectory%28strPath%29%20%7B%0A%20%20%20%20%20%20%20%20fm%20%3D%20fm%20%7C%7C%20%24.NSFileManager.defaultManager%3B%0A%0A%20%20%20%20%20%20%20%20return%20ObjC.unwrap%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20fm.contentsOfDirectoryAtPathError%28%24%28strPath%29%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.stringByExpandingTildeInPath%2C%20null%29%29%0A%20%20%20%20%20%20%20%20%20%20%20%20.map%28ObjC.unwrap%29%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20var%20fm%20%3D%20%24.NSFileManager.defaultManager%3B%0A%0A%20%20%20%20listDirectory%28%27~/Documents%27%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Uses Objective C to read file names in a given folder.</span>
+    <span class="hljs-comment">// Copied from the JXA/Cookbook https://github.com/JXA-Cookbook/JXA-Cookbook</span>
+
+        <span class="hljs-comment">// listDirectory :: FilePath -&gt; [FilePath]</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">listDirectory</span>(<span class="hljs-params">strPath</span>) </span>{
+            fm = fm || $.NSFileManager.defaultManager;
+
+            <span class="hljs-keyword">return</span> ObjC.unwrap(
+                    fm.contentsOfDirectoryAtPathError($(strPath)
+                        .stringByExpandingTildeInPath, <span class="hljs-literal">null</span>))
+                .map(ObjC.unwrap);
+        }
+
+        <span class="hljs-keyword">var</span> fm = $.NSFileManager.defaultManager;
+
+        listDirectory(<span class="hljs-string">'~/Documents'</span>);
+  </code></pre>
+  <hr>
+  <p>  <a name="reminders-create-new-list"></a>
+    <h4> Reminders Create new List</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Create%20new%20Reminders%20List%0A%0Avar%20Reminders%20%3D%20Application%28%22Reminders%22%29%3B%0A%0A//Create%20new%20List%20object.%20Other%20properties%20are%20color%2C%20container%2C%20and%20emblem.%0Avar%20newReminderList%20%3D%20Reminders.List%28%7Bname%3A%20%22TEST%22%7D%29%3B%0A%0AReminders.lists.push%28newReminderList%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  // <span class="hljs-keyword">Create</span> <span class="hljs-keyword">new</span> Reminders <span class="hljs-keyword">List</span>
+
+    <span class="hljs-keyword">var</span> Reminders = Application(<span class="hljs-string">"Reminders"</span>);
+
+    //<span class="hljs-keyword">Create</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">List</span> object. Other properties <span class="hljs-keyword">are</span> color, <span class="hljs-keyword">container</span>, <span class="hljs-keyword">and</span> emblem.
+    <span class="hljs-keyword">var</span> newReminderList = Reminders.List({<span class="hljs-keyword">name</span>: <span class="hljs-string">"TEST"</span>});
+
+    Reminders.lists.push(newReminderList);
+  </code></pre>
+  <hr>
+  <p>  <a name="reminders-explore-list-properties"></a>
+    <h4> Reminders Explore List Properties</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Extracting%20Reminder%20list%20properties%0A%0Avar%20Reminders%20%3D%20Application%28%22Reminders%22%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">// Extracting Reminder list properties</span>
+
+    <span class="hljs-keyword">var</span> Reminders = Application(<span class="hljs-string">"Reminders"</span>);
+  </code></pre>
+  <hr>
+  <p>  <a name="reminders-show-reminder-byid"></a>
+    <h4> Reminders Show reminder byId</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0Avar%20Reminders%20%3D%20Application%28%22Reminders%22%29%0A%0A//%20Open%20reminders%20on%20the%20screen%20to%20see%20selected%20reminder%0AReminders.activate%28%29%0A%0A//Reminders.lists.byName%28%27List%201%27%29.show%28%29%0A%0A//%20You%20need%20to%20find%20a%20correct%20Id.%20%0AApplication%28%22Reminders%22%29.reminders.byId%28%22x-apple-reminder%3A//D20AFA87-6606-48D9-A4D0-758B1A8F07DB%22%29.show%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-built_in">var</span> Reminders = Application(<span class="hljs-string">"Reminders"</span>)
+
+    <span class="hljs-comment">// Open reminders on the screen to see selected reminder</span>
+    Reminders.activate()
+
+    <span class="hljs-comment">//Reminders.lists.byName('List 1').show()</span>
+
+    <span class="hljs-comment">// You need to find a correct Id.</span>
+    Application(<span class="hljs-string">"Reminders"</span>).reminders.byId(<span class="hljs-string">"x-apple-reminder://D20AFA87-6606-48D9-A4D0-758B1A8F07DB"</span>).<span class="hljs-built_in">show</span>();
+  </code></pre>
+  <hr>
+  <p>  <a name="reminders-create-new-reminder"></a>
+    <h4> Reminders create new Reminder</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Create%20new%20Reminder%0A//%20from%20https%3A//www.richardhyde.net/2019/04/16/New-Reminder-Using-JXA.html%0A%0Avar%20reminders%20%3D%20Application%28%22Reminders%22%29%3B%0Avar%20newReminder%20%3D%20reminders.Reminder%28%7B%20name%3A%20%22Title%20for%20reminder%22%2C%20body%3A%20%22Notes%20for%20the%20reminder%22%7D%29%3B%0Areminders.lists.byName%28%22List%20Name%22%29.reminders.push%28newReminder%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-regexp">//</span> Create new Reminder
+    <span class="hljs-regexp">//</span> from https:<span class="hljs-regexp">//</span>www.richardhyde.net<span class="hljs-regexp">/2019/</span><span class="hljs-number">04</span><span class="hljs-regexp">/16/</span>New-Reminder-Using-JXA.html
+
+    var reminders = Application(<span class="hljs-string">"Reminders"</span>);
+    var newReminder = reminders.Reminder({ name: <span class="hljs-string">"Title for reminder"</span>, body: <span class="hljs-string">"Notes for the reminder"</span>});
+    reminders.lists.byName(<span class="hljs-string">"List Name"</span>).reminders.push(newReminder);
+  </code></pre>
+  <hr>
+  <p>  <a name="sa-error-popup"></a>
+    <h4> SA Error popup</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20Include%20Apple%20UI%20library%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0A%09%0Avar%20errorMsg%20%3D%20app.displayDialog%28%22Error%22%2C%20%7B%0Abuttons%3A%20%5B%22Cancel%22%2C%20%22Continue%22%5D%2C%0A//%20icon%20alternatives%20are%20stop%2C%20note%2C%20caution%0AwithIcon%3A%20%22stop%22%2C%0AdefaultButton%3A%20%22Continue%22%0A%7D%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    <span class="hljs-comment">// Include Apple UI library</span>
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">app</span> = Application.currentApplication()
+    <span class="hljs-keyword">app</span>.includeStandardAdditions = true
+
+    <span class="hljs-keyword">var</span> errorMsg = <span class="hljs-keyword">app</span>.displayDialog(<span class="hljs-string">"Error"</span>, {
+    buttons: [<span class="hljs-string">"Cancel"</span>, <span class="hljs-string">"Continue"</span>],
+    <span class="hljs-comment">// icon alternatives are stop, note, caution</span>
+    withIcon: <span class="hljs-string">"stop"</span>,
+    defaultButton: <span class="hljs-string">"Continue"</span>
+    });
+  </code></pre>
+  <hr>
+  <p>  <a name="sa-file-exists"></a>
+    <h4> SA File exists</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=var%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0A%0Avar%20sourceFilePath%20%3D%20Path%28%22/User/adkj/Demo/sample.rtf%22%29%3B%0Avar%20sourceFile%20%3D%20%22/User/adkj/Demo/sample.rtf%22%0A%0A%0A%0Aapp.exists%28sourceFile%29%0A//%20Result%3A%20true%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-keyword">var</span> <span class="hljs-keyword">app</span> = Application.currentApplication()
+    <span class="hljs-keyword">app</span>.includeStandardAdditions = true
+
+    <span class="hljs-keyword">var</span> sourceFilePath = Path(<span class="hljs-string">"/User/adkj/Demo/sample.rtf"</span>);
+    <span class="hljs-keyword">var</span> sourceFile = <span class="hljs-string">"/User/adkj/Demo/sample.rtf"</span>
+
+
+
+    <span class="hljs-keyword">app</span>.exists(sourceFile)
+    <span class="hljs-comment">// Result: true;</span>
+  </code></pre>
+  <hr>
+  <p>  <a name="sa-launch-and-quit-application"></a>
+    <h4> SA Launch and Quit Application</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=var%20Reminders%20%3D%20Application%28%27Reminders%27%29%3B%0A%0AReminders.activate%28%29%3B%0A%0Adelay%284%29%0A%0AReminders.quit%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-built_in">var</span> Reminders = Application('Reminders');
+
+    Reminders.<span class="hljs-built_in">activate</span>();
+
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">4</span>)
+
+    Reminders.<span class="hljs-built_in">quit</span>();
+  </code></pre>
+  <hr>
+  <p>  <a name="sa-run-shell-command"></a>
+    <h4> SA Run shell command</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=var%20app%20%3D%20Application.currentApplication%28%29%3B%0Aapp.includeStandardAdditions%20%3D%20true%3B%0A%0A//%20Starts%20screensaver%0Aapp.doShellScript%28%27/System/Library/CoreServices/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine%20-background%20%26%27%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-keyword">var</span> <span class="hljs-keyword">app</span> = Application.currentApplication();
+    <span class="hljs-keyword">app</span>.includeStandardAdditions = true;
+
+    <span class="hljs-comment">// Starts screensaver</span>
+    <span class="hljs-keyword">app</span>.doShellScript('/System/Library/CoreServices/ScreenSaverEngine.<span class="hljs-keyword">app</span>/Contents/MacOS/ScreenSaverEngine -background &amp;');
+  </code></pre>
+  <hr>
+  <p>  <a name="sa-spotlight-deeplink"></a>
+    <h4> SA Spotlight deeplink</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//Spotlight%20to%20use%20Deep%20link%2C%20in%20this%20case%20Red%20Hot%20Timer%0A%0Aapp%20%3D%20Application.currentApplication%28%29%3B%0Aapp.includeStandardAdditions%20%3D%20true%3B%0A%0Aapp.openLocation%28%22timer%3A//30m%22%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  //Spotlight <span class="hljs-keyword">to</span> <span class="hljs-keyword">use</span> Deep link, <span class="hljs-keyword">in</span> this <span class="hljs-keyword">case</span> Red Hot Timer
+
+    app = Application.currentApplication();
+    app.includeStandardAdditions = <span class="hljs-literal">true</span>;
+
+    app.openLocation(<span class="hljs-string">"timer://30m"</span>);
+  </code></pre>
+  <hr>
+  <p>  <a name="sa-ui-to-choose-from-listed-array-elements"></a>
+    <h4> SA UI to Choose from Listed array elements</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=%0A//%20To%20use%20UI%20elements%0Avar%20app%20%3D%20Application.currentApplication%28%29%0Aapp.includeStandardAdditions%20%3D%20true%0A%0A//%20Array%20of%20things%20to%20choose%20from%20%0Avar%20choices%20%3D%20%5B%22Red%22%2C%20%22Orange%22%2C%20%22Yellow%22%2C%20%22Green%22%2C%20%22Blue%22%2C%20%22Indigo%22%2C%20%22Violet%22%5D%0Avar%20chooseItem%20%3D%20app.chooseFromList%28choices%2C%20%7B%0AdefaultAnswer%3A%20%22Red%22%2C%20%0A%20%20%20%20withPrompt%3A%20%22Choose%20a%20color%22%0A%7D%0A%29%0A%0A//%20Returns%20array%20of%20choices%0AchooseItem%0A%0A//Stringify%20the%20choice%0AchoosenItem%20%3D%20chooseItem%5B0%5D%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">
+    // To <span class="hljs-keyword">use</span> UI elements
+    <span class="hljs-keyword">var</span> app = Application.currentApplication()
+    app.includeStandardAdditions = <span class="hljs-literal">true</span>
+
+    // <span class="hljs-built_in">Array</span> <span class="hljs-keyword">of</span> things <span class="hljs-keyword">to</span> <span class="hljs-keyword">choose</span> <span class="hljs-keyword">from</span>
+    <span class="hljs-keyword">var</span> choices = [<span class="hljs-string">"Red"</span>, <span class="hljs-string">"Orange"</span>, <span class="hljs-string">"Yellow"</span>, <span class="hljs-string">"Green"</span>, <span class="hljs-string">"Blue"</span>, <span class="hljs-string">"Indigo"</span>, <span class="hljs-string">"Violet"</span>]
+    <span class="hljs-keyword">var</span> chooseItem = app.chooseFromList(choices, {
+    defaultAnswer: <span class="hljs-string">"Red"</span>,
+        withPrompt: <span class="hljs-string">"Choose a color"</span>
+    }
+    )
+
+    // <span class="hljs-keyword">Returns</span> <span class="hljs-built_in">array</span> <span class="hljs-keyword">of</span> choices
+    chooseItem
+
+    //Stringify the choice
+    choosenItem = chooseItem[<span class="hljs-number">0</span>];
+  </code></pre>
+  <hr>
+  <p>  <a name="sa-user-information"></a>
+    <h4> SA User information</h4></p>
+  <p>  <a href="applescript://com.apple.scripteditor?action=new&script=//%20Get%20user%20information%0A%0Avar%20SystemEvents%20%3D%20Application%28%27System%20Events%27%29%20%0A%0A%0ASystemEvents.currentUser.homeDirectory%28%29%0ASystemEvents.currentUser%28%29%3B">Open in Editor</a>: Jump to <a href="#index">Index</a> | <a href="#top">Top</a></p>
+  <pre><code class="lang-javascript">  <span class="hljs-comment">// Get user information</span>
+
+    <span class="hljs-keyword">var</span> SystemEvents = Application(<span class="hljs-string">'System Events'</span>)
+
+
+    SystemEvents.currentUser.homeDirectory()
+    SystemEvents.currentUser();
+  </code></pre>
+    <pre><code class="lang-javascript">  <span class="hljs-comment">// Get user information</span>
+
+    <span class="hljs-keyword">var</span> SystemEvents = Application(<span class="hljs-string">'System Events'</span>)
+
+
+    SystemEvents.currentUser.homeDirectory()
+    SystemEvents.currentUser();
+  </code></pre>
+
+
+
+  <hr>
+  <p>  <a name="index"></a>
+    <h2> Index </h2>
+    Jump to <a href="#top">Top</a>
+    <ul>
+    <li> <a href="#apple-ref-add-attendee-to-event">Apple Ref Add Attendee to Event</a>
+    <li> <a href="#apple-ref-mail">Apple Ref Mail</a>
+    <li> <a href="#apple-ref-new-keynote">Apple Ref New Keynote</a>
+    <li> <a href="#apple-ref-reference-doc-examples">Apple Ref Reference Doc Examples</a>
+    <li> <a href="#apple-ref-ui-text-prompt">Apple Ref UI Text Prompt</a>
+    <li> <a href="#apple-ref-write-to-file">Apple Ref Write to File</a>
+    <li> <a href="#apple-ref-standard-applications">Apple Ref standard applications</a>
+    <li> <a href="#appleref-create-calendar">AppleRef Create Calendar</a>
+    <li> <a href="#appleref-create-an-event-tomorrow-at-1500">AppleRef Create an Event tomorrow at 1500</a>
+    <li> <a href="#appleref-reveal-an-event">AppleRef Reveal an Event</a>
+    <li> <a href="#appleref-read-file-fails">AppleRef read file FAILS</a>
+    <li> <a href="#calendar-count-number-of-events">Calendar Count Number of Events</a>
+    <li> <a href="#calendar-create-1-hour-event-starting-now">Calendar Create 1 hour event starting now</a>
+    <li> <a href="#calendar-delete-event-byid">Calendar Delete Event byId</a>
+    <li> <a href="#calendar-event-create-and-add-event-elements">Calendar Event Create and Add Event Elements</a>
+    <li> <a href="#calendar-event-search">Calendar Event Search</a>
+    <li> <a href="#calendar-find-events-in-past-hour">Calendar Find Events in past hour</a>
+    <li> <a href="#calendar-get-number-of-events-in-all">Calendar Get Number of Events in all</a>
+    <li> <a href="#calendar-open-file-alarm-exploration">Calendar Open file Alarm exploration</a>
+    <li> <a href="#calendar-read-upcoming-event-into-array">Calendar Read Upcoming Event into Array</a>
+    <li> <a href="#calendar-read-event-information">Calendar Read event information</a>
+    <li> <a href="#calendar-show-an-event">Calendar Show an Event</a>
+    <li> <a href="#calendar-sort-events-by-date">Calendar Sort events by Date</a>
+    <li> <a href="#calendar-update-event-property-(create-new-event-with-new-property">Calendar Update event property (create new event with new property)</a>)
+    <li> <a href="#finder-full-path-to-this-file">Finder Full path to this file</a>
+    <li> <a href="#finder-item-properties">Finder Item properties</a>
+    <li> <a href="#finder-moving-and-item-properties">Finder Moving and item properties</a>
+    <li> <a href="#finder-open-window">Finder Open Window</a>
+    <li> <a href="#finder-make-folder">Finder make folder</a>
+    <li> <a href="#finder-moving-files">Finder moving files</a>
+    <li> <a href="#investigate-failed-calendar-identifier">Investigate Failed Calendar identifier</a>
+    <li> <a href="#js-array-sort-by-date">JS Array Sort by Date</a>
+    <li> <a href="#js-exploration">JS exploration</a>
+    <li> <a href="#jxa-applescript-in-jxa">JXA AppleScript in JXA</a>
+    <li> <a href="#jxa-quit-application">JXA Quit Application</a>
+    <li> <a href="#mission-control-manage-desktops-and-open-apps">Mission Control Manage Desktops and open apps</a>
+    <li> <a href="#music-toggle-play-pause">Music Toggle Play Pause</a>
+    <li> <a href="#objc-read-file-contents">ObjC Read file contents</a>
+    <li> <a href="#objc-read-folder-files">ObjC Read folder files</a>
+    <li> <a href="#reminders-create-new-list">Reminders Create new List</a>
+    <li> <a href="#reminders-explore-list-properties">Reminders Explore List Properties</a>
+    <li> <a href="#reminders-show-reminder-byid">Reminders Show reminder byId</a>
+    <li> <a href="#reminders-create-new-reminder">Reminders create new Reminder</a>
+    <li> <a href="#sa-error-popup">SA Error popup</a>
+    <li> <a href="#sa-file-exists">SA File exists</a>
+    <li> <a href="#sa-launch-and-quit-application">SA Launch and Quit Application</a>
+    <li> <a href="#sa-run-shell-command">SA Run shell command</a>
+    <li> <a href="#sa-spotlight-deeplink">SA Spotlight deeplink</a>
+    <li> <a href="#sa-ui-to-choose-from-listed-array-elements">SA UI to Choose from Listed array elements</a>
+    <li> <a href="#sa-user-information">SA User information</a></p>
+
+
+  <a name="links"></a>
+  <h2> Other Resources</h2>
+  Jump to [Top](#top)
+  <li> <a href="https://github.com/JXA-Cookbook/JXA-Cookbook">JXA Cookbook on Github</a>
+  <li> <a href="https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/Articles/Introduction.html#//apple_ref/doc/uid/TP40014508-CH111-SW1">JXA Release Notes</a>
+  <li> <a href="https://github.com/josh-/automating-macOS-with-JXA-presentation">JXA tutorial from WWDC</a>
+  <li> <a href="https://apple-dev.groups.io/g/jxa/wiki/JXA-Resources">JXA Resources</a>
+  <li> <a href="https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html#//apple_ref/doc/uid/TP40016239-CH69-SW1">Apple Docs</a>
+  <li> <a href="https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983">AppleScript Language Guide</a>
+  <li> <a href="https://hackmag.com/coding/getting-to-grips-with-javascript-automation-for-os-x/">Hack Mag JXA intro</a>
+  <li> <a href="https://www.macstories.net/tutorials/getting-started-with-javascript-for-automation-on-yosemite/">Mac Stories: Getting Started with JXA</a>
+  <li> <a href="https://medium.com/@SteveBarbera/automating-chrome-with-jxa-javascript-application-scripting-6f9bc433216a">Automating Chrome</a>
+  <li> <a href="http://www.openspc2.org/reibun/JXA/Yosemite/">Japanese JXA Examples</a>
+
+
+  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+</body>
+
+</html>
