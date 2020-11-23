@@ -1,6 +1,6 @@
-# JXA Snippets 
+# JXA Examples 
 
-A collection of Javascript for Automation (JXA) Snippets for reference and learning. All the code in this repository was run and tested on macOS 10.15.4 Catalina.
+A collection of Javascript for Automation (JXA) examples for reference and learning. All the code in this repository was run and tested on macOS 10.15.4 Catalina. You can see all code with examples that open directly in the macOS script editor at [jxa-examples.akjems.com](http://jxa-examples.akjems.com).
 
 ## About 
 
