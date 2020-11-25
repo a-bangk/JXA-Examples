@@ -26,16 +26,70 @@
 <h1>JXA Examples </h1>
   <a name="top"></a>
   A collection of Javascript for Automation (JXA) examples for reference and learning. All the code in this repository was run and tested on macOS 10.15.4 Catalina.
-  JXA is the Javascript implementation of AppleScript and it allows to script Apple's standard applications, such as Calendar, Reminders, and Music. It can also be used to control the UI. There aren't any recent books or tutorials on JXA so I hope this collection will make your learning a little easier. [Other resources](#links) are linked at the bottom of the page.
+  JXA is the Javascript implementation of AppleScript and it allows to script Apple's standard applications, such as Calendar, Reminders, and Music. It can also be used to control the UI. There aren't any recent books or tutorials on JXA so I hope this collection will make your learning a little easier. <a href="#links">Other resources</a> are linked at the bottom of the page.
 
   <h3>Page Structure</h3>
   Script names start with the App or the library name they are demonstrating. The exceptions are:
   <ul>
   <li> Investigate - scripts and features that do not work as expected
   <li> SA - Scripts demonstrating feature from Standard Additions library
-  <li> Apple ref - copied from [Apple's own guides](https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/index.html#//apple_ref/doc/uid/TP40016239-CH56-SW1).
+  <li> Apple ref - copied from <a href="ttps://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/index.html#//apple_ref/doc/uid/TP40016239-CH56-SW1">Apple's own guides</a>.
   </ul>
+  <p>  <a name="index"></a>
+    <h2> List of JXA Example Scripts</h2>
 
+    <ul>
+    <li> <a href="#apple-ref-add-attendee-to-event">Apple Ref Add Attendee to Event</a>
+    <li> <a href="#apple-ref-mail">Apple Ref Mail</a>
+    <li> <a href="#apple-ref-new-keynote">Apple Ref New Keynote</a>
+    <li> <a href="#apple-ref-reference-doc-examples">Apple Ref Reference Doc Examples</a>
+    <li> <a href="#apple-ref-ui-text-prompt">Apple Ref UI Text Prompt</a>
+    <li> <a href="#apple-ref-write-to-file">Apple Ref Write to File</a>
+    <li> <a href="#apple-ref-standard-applications">Apple Ref standard applications</a>
+    <li> <a href="#appleref-create-calendar">AppleRef Create Calendar</a>
+    <li> <a href="#appleref-create-an-event-tomorrow-at-1500">AppleRef Create an Event tomorrow at 1500</a>
+    <li> <a href="#appleref-reveal-an-event">AppleRef Reveal an Event</a>
+    <li> <a href="#appleref-read-file-fails">AppleRef read file FAILS</a>
+    <li> <a href="#calendar-count-number-of-events">Calendar Count Number of Events</a>
+    <li> <a href="#calendar-create-1-hour-event-starting-now">Calendar Create 1 hour event starting now</a>
+    <li> <a href="#calendar-delete-event-byid">Calendar Delete Event byId</a>
+    <li> <a href="#calendar-event-create-and-add-event-elements">Calendar Event Create and Add Event Elements</a>
+    <li> <a href="#calendar-event-search">Calendar Event Search</a>
+    <li> <a href="#calendar-find-events-in-past-hour">Calendar Find Events in past hour</a>
+    <li> <a href="#calendar-get-number-of-events-in-all">Calendar Get Number of Events in all</a>
+    <li> <a href="#calendar-open-file-alarm-exploration">Calendar Open file Alarm exploration</a>
+    <li> <a href="#calendar-read-upcoming-event-into-array">Calendar Read Upcoming Event into Array</a>
+    <li> <a href="#calendar-read-event-information">Calendar Read event information</a>
+    <li> <a href="#calendar-show-an-event">Calendar Show an Event</a>
+    <li> <a href="#calendar-sort-events-by-date">Calendar Sort events by Date</a>
+    <li> <a href="#calendar-update-event-property-(create-new-event-with-new-property">Calendar Update event property (create new event with new property)</a>)
+    <li> <a href="#finder-full-path-to-this-file">Finder Full path to this file</a>
+    <li> <a href="#finder-item-properties">Finder Item properties</a>
+    <li> <a href="#finder-moving-and-item-properties">Finder Moving and item properties</a>
+    <li> <a href="#finder-open-window">Finder Open Window</a>
+    <li> <a href="#finder-make-folder">Finder make folder</a>
+    <li> <a href="#finder-moving-files">Finder moving files</a>
+    <li> <a href="#investigate-failed-calendar-identifier">Investigate Failed Calendar identifier</a>
+    <li> <a href="#js-array-sort-by-date">JS Array Sort by Date</a>
+    <li> <a href="#js-exploration">JS exploration</a>
+    <li> <a href="#jxa-applescript-in-jxa">JXA AppleScript in JXA</a>
+    <li> <a href="#jxa-quit-application">JXA Quit Application</a>
+    <li> <a href="#mission-control-manage-desktops-and-open-apps">Mission Control Manage Desktops and open apps</a>
+    <li> <a href="#music-toggle-play-pause">Music Toggle Play Pause</a>
+    <li> <a href="#objc-read-file-contents">ObjC Read file contents</a>
+    <li> <a href="#objc-read-folder-files">ObjC Read folder files</a>
+    <li> <a href="#reminders-create-new-list">Reminders Create new List</a>
+    <li> <a href="#reminders-explore-list-properties">Reminders Explore List Properties</a>
+    <li> <a href="#reminders-show-reminder-byid">Reminders Show reminder byId</a>
+    <li> <a href="#reminders-create-new-reminder">Reminders create new Reminder</a>
+    <li> <a href="#sa-error-popup">SA Error popup</a>
+    <li> <a href="#sa-file-exists">SA File exists</a>
+    <li> <a href="#sa-launch-and-quit-application">SA Launch and Quit Application</a>
+    <li> <a href="#sa-run-shell-command">SA Run shell command</a>
+    <li> <a href="#sa-spotlight-deeplink">SA Spotlight deeplink</a>
+    <li> <a href="#sa-ui-to-choose-from-listed-array-elements">SA UI to Choose from Listed array elements</a>
+    <li> <a href="#sa-user-information">SA User information</a></p>
+</ul>
   <p>  Jump to <a href="#index">Index</a>.</p>
   <hr>
   <p>  <a name="apple-ref-add-attendee-to-event"></a>
@@ -1244,65 +1298,11 @@
 
 
   <hr>
-  <p>  <a name="index"></a>
-    <h2> Index </h2>
-    Jump to <a href="#top">Top</a>
-    <ul>
-    <li> <a href="#apple-ref-add-attendee-to-event">Apple Ref Add Attendee to Event</a>
-    <li> <a href="#apple-ref-mail">Apple Ref Mail</a>
-    <li> <a href="#apple-ref-new-keynote">Apple Ref New Keynote</a>
-    <li> <a href="#apple-ref-reference-doc-examples">Apple Ref Reference Doc Examples</a>
-    <li> <a href="#apple-ref-ui-text-prompt">Apple Ref UI Text Prompt</a>
-    <li> <a href="#apple-ref-write-to-file">Apple Ref Write to File</a>
-    <li> <a href="#apple-ref-standard-applications">Apple Ref standard applications</a>
-    <li> <a href="#appleref-create-calendar">AppleRef Create Calendar</a>
-    <li> <a href="#appleref-create-an-event-tomorrow-at-1500">AppleRef Create an Event tomorrow at 1500</a>
-    <li> <a href="#appleref-reveal-an-event">AppleRef Reveal an Event</a>
-    <li> <a href="#appleref-read-file-fails">AppleRef read file FAILS</a>
-    <li> <a href="#calendar-count-number-of-events">Calendar Count Number of Events</a>
-    <li> <a href="#calendar-create-1-hour-event-starting-now">Calendar Create 1 hour event starting now</a>
-    <li> <a href="#calendar-delete-event-byid">Calendar Delete Event byId</a>
-    <li> <a href="#calendar-event-create-and-add-event-elements">Calendar Event Create and Add Event Elements</a>
-    <li> <a href="#calendar-event-search">Calendar Event Search</a>
-    <li> <a href="#calendar-find-events-in-past-hour">Calendar Find Events in past hour</a>
-    <li> <a href="#calendar-get-number-of-events-in-all">Calendar Get Number of Events in all</a>
-    <li> <a href="#calendar-open-file-alarm-exploration">Calendar Open file Alarm exploration</a>
-    <li> <a href="#calendar-read-upcoming-event-into-array">Calendar Read Upcoming Event into Array</a>
-    <li> <a href="#calendar-read-event-information">Calendar Read event information</a>
-    <li> <a href="#calendar-show-an-event">Calendar Show an Event</a>
-    <li> <a href="#calendar-sort-events-by-date">Calendar Sort events by Date</a>
-    <li> <a href="#calendar-update-event-property-(create-new-event-with-new-property">Calendar Update event property (create new event with new property)</a>)
-    <li> <a href="#finder-full-path-to-this-file">Finder Full path to this file</a>
-    <li> <a href="#finder-item-properties">Finder Item properties</a>
-    <li> <a href="#finder-moving-and-item-properties">Finder Moving and item properties</a>
-    <li> <a href="#finder-open-window">Finder Open Window</a>
-    <li> <a href="#finder-make-folder">Finder make folder</a>
-    <li> <a href="#finder-moving-files">Finder moving files</a>
-    <li> <a href="#investigate-failed-calendar-identifier">Investigate Failed Calendar identifier</a>
-    <li> <a href="#js-array-sort-by-date">JS Array Sort by Date</a>
-    <li> <a href="#js-exploration">JS exploration</a>
-    <li> <a href="#jxa-applescript-in-jxa">JXA AppleScript in JXA</a>
-    <li> <a href="#jxa-quit-application">JXA Quit Application</a>
-    <li> <a href="#mission-control-manage-desktops-and-open-apps">Mission Control Manage Desktops and open apps</a>
-    <li> <a href="#music-toggle-play-pause">Music Toggle Play Pause</a>
-    <li> <a href="#objc-read-file-contents">ObjC Read file contents</a>
-    <li> <a href="#objc-read-folder-files">ObjC Read folder files</a>
-    <li> <a href="#reminders-create-new-list">Reminders Create new List</a>
-    <li> <a href="#reminders-explore-list-properties">Reminders Explore List Properties</a>
-    <li> <a href="#reminders-show-reminder-byid">Reminders Show reminder byId</a>
-    <li> <a href="#reminders-create-new-reminder">Reminders create new Reminder</a>
-    <li> <a href="#sa-error-popup">SA Error popup</a>
-    <li> <a href="#sa-file-exists">SA File exists</a>
-    <li> <a href="#sa-launch-and-quit-application">SA Launch and Quit Application</a>
-    <li> <a href="#sa-run-shell-command">SA Run shell command</a>
-    <li> <a href="#sa-spotlight-deeplink">SA Spotlight deeplink</a>
-    <li> <a href="#sa-ui-to-choose-from-listed-array-elements">SA UI to Choose from Listed array elements</a>
-    <li> <a href="#sa-user-information">SA User information</a></p>
 
 
   <a name="links"></a>
   <h2> Other Resources</h2>
-  Jump to [Top](#top)
+  Jump to <a href="#top">Top</a>
   <li> <a href="https://github.com/JXA-Cookbook/JXA-Cookbook">JXA Cookbook on Github</a>
   <li> <a href="https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/Articles/Introduction.html#//apple_ref/doc/uid/TP40014508-CH111-SW1">JXA Release Notes</a>
   <li> <a href="https://github.com/josh-/automating-macOS-with-JXA-presentation">JXA tutorial from WWDC</a>

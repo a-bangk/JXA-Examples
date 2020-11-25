@@ -3,12 +3,7 @@
 A collection of Javascript for Automation (JXA) examples for reference and learning. All the code in this repository was run and tested on macOS 10.15.4 Catalina. You can see all code with examples that open directly in the macOS script editor at [jxa-examples.akjems.com](http://jxa-examples.akjems.com).
 
 ## About 
-
-Code can be seen in and launched from the browser on the [blog](https://www.seamlessio.com/articles/jxa-snippets-collection).
-
 JXA is the Javascript implementation of AppleScript.
-
-You can drop the files onto the included Applications "Rename js to scpt" and "Rename scpt to js" per your preference. Script Editor can open both file types. 
 
 ## Naming
 
@@ -20,7 +15,7 @@ File names start with the App or library they are demonstrating. The exceptions 
 
 
 ## Useful Places Online
-
+There is no one reference source for JXA source online. I have had most luck with Stackoverflow. When an example is from stackoverflow a direct link is provided in the code. 
 ### From Apple
 
 * [JXA Release Notes](https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/Articles/Introduction.html#//apple_ref/doc/uid/TP40014508-CH111-SW1)
